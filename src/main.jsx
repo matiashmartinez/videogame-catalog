@@ -1,12 +1,7 @@
-// src/index.jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
-import RoutesComponent from './Routes';
-import './App.css';
+import RoutesController from "./RouterController";
+import { createRoot } from "react-dom/client";
 
-ReactDOM.render(
-  
-    <RoutesComponent />
-  ,
-  document.getElementById('root')
-);
+const domNode = document.getElementById("root");
+const root = createRoot(domNode);
+
+root.render(<RoutesController />);

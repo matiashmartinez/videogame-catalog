@@ -2,50 +2,25 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+
+  margin-bottom: auto;
 }
+
+
 
 body {
   font-family: Arial, sans-serif;
   background-color: #0f0f0f; /* Fondo oscuro para toda la página */
   color: #ddd;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  display: block;
+  height: 80%;
+  
+  
+  
 }
 
-/* Header */
-header {
-  background-color: #007bff; /* Color de fondo azul */
-  color: white;
-  padding: 1rem 2rem; /* Espaciado interno */
-  display: flex;
-  justify-content: space-between; /* Alinea el contenido a los extremos */
-  align-items: center; /* Centra verticalmente */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-}
 
-header h1 {
-  font-size: 1.5rem; /* Tamaño del texto */
-  margin: 0;
-}
 
-.navbar {
-  display: flex;
-  gap: 1rem; /* Espacio entre los enlaces */
-}
-
-.navbar a {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.navbar a:hover {
-  background-color: #0056b3; /* Color de fondo al pasar el cursor */
-}
 
 /* Catálogo */
 .catalog {
@@ -72,11 +47,11 @@ header h1 {
 .card::before {
   content: '';
   position: absolute;
-  top: 6px; /* Ajuste para el grosor del contorno */
-  left: 6px; /* Ajuste para el grosor del contorno */
-  width: calc(100% + 12px); /* Ajuste para el grosor del contorno */
-  height: calc(100% + 12px); /* Ajuste para el grosor del contorno */
-  background: linear-gradient(45deg, #ff0000, #0000ff); /* Elimina el verde claro */
+  top: 6px;
+  left: 6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  background: linear-gradient(45deg, #ff0000, #0000ff);
   background-size: 400% 400%;
   border-radius: 10px;
   z-index: -1;
@@ -109,7 +84,7 @@ header h1 {
 .card img {
   width: 100%;
   height: 300px; /* Altura fija para que las imágenes se ajusten */
-  object-fit: cover; /* Mantiene la proporción y recorta la imagen si es necesario */
+  object-fit: cover;
   margin: 0;
   padding: 0;
 }
@@ -184,11 +159,13 @@ header h1 {
 
 /* Footer */
 footer {
+  
+  position: static;
   text-align: center;
   padding: 2rem;
   background-color: #007bff;
   color: white;
-  width: 100%;
+
 }
 
 /* Contact Button */
@@ -210,8 +187,8 @@ footer {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  width: 60px; /* Asegura un tamaño uniforme */
-  height: 60px; /* Asegura un tamaño uniforme */
+  width: 60px;
+  height: 60px;
   background-color: #007bff;
   color: white;
   border-radius: 50%;
@@ -233,319 +210,70 @@ footer {
       grid-template-columns: 1fr; /* Una columna en pantallas móviles */
   }
 
-  header {
-      flex-direction: column;
-      align-items: center;
+  footer {
       padding: 1rem;
-  }
-
-  .navbar {
-      flex-direction: column;
-      gap: 0.5rem;
+      height: auto;
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1100x) {
   .catalog {
       padding: 2rem 10vw;
   }
 
   footer {
       padding: 2rem 10vw;
+      text-align: center;
+      padding: 2rem;
+      background-color: #007bff;
+      color: white;
+      width: 100%;
+      margin-top: auto; /* Empuja el footer al final de la página */
+      margin-bottom: 0;
   }
 }
 
-/* Estilos para el formulario */
-.form-container {
-  background-color: #1c1c1c; /* Fondo oscuro para el formulario */
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 600px;
-  margin: 2rem auto;
-}
-
-.form-container h2 {
-  font-size: 1.75rem;
-  margin-bottom: 1rem;
-  color: #fff;
-}
-
-.form-group {
-  margin-bottom: 1.5rem; /* Espacio entre campos del formulario */
-}
-
-.form-group label {
-  display: block;
-  font-size: 1rem;
-  color: #ddd;
-  margin-bottom: 0.5rem;
-}
-
-.form-group input, 
-.form-group select, 
-.form-group textarea {
+/* Header */
+.header {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #333;
-  border-radius: 5px;
-  background-color: #333;
-  color: #ddd;
-  font-size: 1rem;
-  box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
-}
-
-.form-group input:focus, 
-.form-group select:focus, 
-.form-group textarea:focus {
-  border-color: #007bff; /* Color de borde al enfocarse */
-  outline: none; /* Elimina el contorno por defecto */
-}
-
-.form-group textarea {
-  resize: vertical; /* Permite redimensionar verticalmente */
-  min-height: 150px; /* Altura mínima del textarea */
-}
-
-.submit-button {
   background-color: #007bff;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  text-align: center;
-  transition: background-color 0.3s ease;
-  display: block;
-  width: 100%;
-  margin-top: 1rem; /* Espacio superior antes del botón */
-}
-
-.submit-button:hover {
-  background-color: #0056b3; /* Color de fondo al pasar el cursor */
-}
-
-
-/* Estilos para el botón de detalles */
-.btn-details {
-  background-color: #007bff;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-align: center;
-  margin-top: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.btn-details:hover {
-  background-color: #0056b3;
-}
-
-/* Estilos para ItemCard */
-.item-card {
-  background: linear-gradient(145deg, #333, #555); /* Gradiente gris oscuro similar a la tarjeta de juegos */
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  padding: 1rem;
-}
-
-.item-card h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.25rem;
-  color: #fff;
-}
-
-.item-card p {
-  margin: 0.5rem 0;
-}
-
-.item-card button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 0.25rem;
-  font-size: 0.875rem;
-}
-
-.item-card button:hover {
-  background-color: #0056b3;
-}
-
-/* Alineación de los botones */
-.item-card button:first-of-type {
-  margin-right: 0.5rem;
-}
-
-/* Estilos para el formulario de ítem */
-form {
-  background-color: #1c1c1c; /* Fondo oscuro similar al de las tarjetas */
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 600px;
-  margin: 2rem auto;
-}
-
-form input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #333;
-  border-radius: 5px;
-  background-color: #333;
-  color: #ddd;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-form input:focus {
-  border-color: #007bff; /* Color de borde al enfocarse */
-  outline: none; /* Elimina el contorno por defecto */
-}
-
-form button {
-  background-color: #007bff;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-  width: 100%; /* Ocupa todo el ancho del formulario */
-}
-
-form button:hover {
-  background-color: #0056b3; /* Color de fondo al pasar el cursor */
-}
-
-/* Estilos generales del menú de navegación */
-nav {
-  background-color: #007bff; /* Color de fondo del menú */
-  padding: 1rem 2rem; /* Espaciado interno */
-}
-
-nav ul {
-  list-style: none; /* Elimina los puntos de la lista */
-  display: flex; /* Usa flexbox para alinear los elementos */
-  gap: 1rem; /* Espacio entre los enlaces */
-  margin: 0; /* Elimina el margen por defecto */
-  padding: 0; /* Elimina el padding por defecto */
-}
-
-nav li {
-  margin: 0; /* Elimina el margen por defecto de los elementos de la lista */
-}
-
-nav a {
-  color: white; /* Color del texto de los enlaces */
-  text-decoration: none; /* Elimina el subrayado de los enlaces */
-  padding: 0.5rem 1rem; /* Espaciado interno de los enlaces */
-  border-radius: 5px; /* Bordes redondeados en los enlaces */
-  transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
-}
-
-nav a:hover {
-  background-color: #0056b3; /* Color de fondo al pasar el cursor */
-}
-.catalog {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  width: 300px;
-}
-
-.game-cover {
-  width: 100%;
-}
-
-.card-content {
-  padding: 1rem;
-}
-
-.game-title {
-  font-size: 1.25rem;
-  margin: 0;
-}
-
-.language, .status {
-  margin: 0.5rem 0;
-}
-
-.btn-gameplay, .btn-hide-gameplay {
-  margin: 0.5rem 0;
-}
-
-.gameplay-container {
-  position: relative;
-}
-
-.gameplay-video {
-  width: 100%;
-  height: 200px;
-}
-
-/* src/app.css */
-.scroll-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #000;
-  color: #fff;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  text-align: center;
-  display: none; /* Se mostrará mediante el estilo inline en el componente */
+  position: sticky;
+  top: 0;
   z-index: 1000;
 }
 
-.scroll-to-top:hover {
-  background-color: #333;
-}
-
-/* src/Catalogo.css */
-.catalog {
+/* Estilos para la navegación */
+.header nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.card {
-  border: 1px solid #ddd;
-  padding: 1rem;
-  width: 200px;
-}
-
-.game-cover {
+  justify-content: center;
   width: 100%;
-  height: auto;
 }
 
-.btn-gameplay, .btn-hide-gameplay {
-  margin-top: 0.5rem;
+/* Estilos para la lista del menú */
+.header nav ul {
+  list-style-type: none; /* Elimina los puntos de las listas */
+  padding: 0;
+  margin: 0;
+  display: flex;
 }
 
-.gameplay-container {
-  margin-top: 1rem;
+/* Estilos para los ítems de la lista */
+.header nav li {
+  margin: 0 1.5rem; /* Espaciado entre ítems del menú */
 }
 
-.gameplay-video {
-  width: 100%;
-  height: 200px;
+/* Estilos para los enlaces del menú */
+.header nav a {
+  display: block;
+  padding: 1.5rem 0;
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.header nav ul li a:hover {
+  transform: scale(1.05); /* Efecto de aumento en hover */
+  color: #25d366;
+  font-size: 24px;
 }
