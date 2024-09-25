@@ -67,7 +67,7 @@ const Catalogo = () => {
           <div className="card-content">
             <h3 className="game-title">{game.name}</h3>
             <p className="language">Idioma: {game.language}</p>
-
+            <p className="language">Platform: {game.platform}</p>
             <div
               className={`status ${game.avaible ? "avaible" : "out-of-stock"}`}
             >
