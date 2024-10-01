@@ -28,28 +28,33 @@ body {
   padding: 2rem;
 }
 
-/* Buscador y filtro */
 .search-filter-container {
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-bottom: 20px;
-  width: 99%;
-  max-width: 1200px; /* Limitar el ancho máximo */
-  margin: 0 auto; /* Centrar en pantallas grandes */
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto; 
+  position: sticky; 
+  top: 0; 
+  background-color: white; 
+  z-index: 1000; 
+  padding: 10px; 
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
 .search-bar {
   width: 100%;
-  min-width: 250px; /* Ancho mínimo para evitar deformaciones */
-  max-width: 600px; /* Ancho máximo para pantallas grandes */
+  min-width: 250px; 
+  max-width: 600px; 
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
   outline: none;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box; /* Asegura que el padding no desborde el contenedor */
+  box-sizing: border-box; 
 }
 
 .search-bar:focus {
@@ -63,8 +68,8 @@ body {
   gap: 10px;
   width: 50%;
   max-width: 400px;
-  margin: 0 auto; /* Centrar el filtro */
-  flex-wrap: wrap; /* Permitir que se ajuste en móviles */
+  margin: 0 auto; 
+  flex-wrap: wrap; 
 }
 
 .platform-filter label {
@@ -157,30 +162,30 @@ body {
 
 .status {
   display: inline-block;
-  padding: 0.2rem 0.5rem; /* Reduce el padding para evitar apariencia de botón */
-  font-weight: normal; /* Cambia de bold a normal */
-  border-radius: 3px; /* Bordes más sutiles */
+  padding: 0.2rem 0.5rem; 
+  font-weight: normal; 
+  border-radius: 3px; 
   color: white;
   background-color: #4CAF50;
-  font-size: 0.9rem; /* Ajusta el tamaño de la fuente para que sea menos prominente */
+  font-size: 0.9rem; 
   text-align: center;
   margin: 0 auto;
   min-width: 80px;
   white-space: nowrap;
-  box-shadow: none; /* Elimina cualquier sombra que dé apariencia de botón */
-  letter-spacing: 0.5px; /* Añade un poco de espacio entre letras para mayor claridad */
+  box-shadow: none; 
+  letter-spacing: 0.5px; 
 }
 
 .status.available {
-  background-color: #4CAF50; /* Verde para disponible */
+  background-color: #4CAF50; 
 }
 
 .status.out-of-stock {
-  background-color: #F44336; /* Rojo para agotado */
+  background-color: #F44336; 
 }
 
 .status.in-transit {
-  background-color: #FFC107; /* Amarillo para en tránsito */
+  background-color: #FFC107; 
 }
 
 .btn-gameplay, .btn-hide-gameplay {
@@ -215,7 +220,7 @@ footer {
   padding: 2rem;
   background-color: #007bff;
   color: white;
-  margin-top: auto; /* Empuja el footer al final de la página */
+  margin-top: auto; 
 }
 
 /* Contact Button */
@@ -257,14 +262,24 @@ footer {
 /* Estilos responsivos */
 @media (max-width: 768px) {
   .catalog {
-    grid-template-columns: 1fr; /* Una columna en pantallas móviles */
+    grid-template-columns: 1fr; 
   }
 
-  .search-filter-container {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
+.search-filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 1200px; /* Limitar el ancho máximo */
+  margin: 0 auto; /* Centrar en pantallas grandes */
+  position: sticky; /* Hace que el elemento sea sticky */
+  top: 0; /* Posición en la parte superior */
+  background-color: white; /* Fondo blanco para que se vea bien al hacer scroll */
+  z-index: 1000; /* Asegurarse de que quede por encima de otros elementos */
+  padding: 10px; /* Espaciado interno para el contenido */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Sombra opcional para un efecto visual */
+}
 
   .search-bar {
     width: 60%;
