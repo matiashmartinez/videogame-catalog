@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useMemo } from "react";
 import { supabase } from "./supabaseClient";
 
 const Catalogo = () => {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState(""); // Para el buscador por nombre
+  const [filterPlatform, setFilterPlatform] = useState(""); // Para el filtro de plataforma
 
   async function getGames() {
     try {
@@ -25,6 +26,7 @@ const Catalogo = () => {
     getGames();
   }, []);
 
+ 
   const handleGameplayButtonClick = (videoId, event) => {
     const container = event.target.parentElement.querySelector(
       ".gameplay-container"
@@ -51,68 +53,113 @@ const Catalogo = () => {
     iframe.src = "";
   };
 
+  const filteredGames = useMemo(() => {
+    return games
+      .filter(game => game.name.toLowerCase().includes(searchTerm.toLowerCase()))
+      .filter(game => filterPlatform ? game.platform === filterPlatform : true);
+  }, [games, searchTerm, filterPlatform]);
+
+
   if (loading) return <p>Cargando...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p>Hubo un problema al cargar los juegos. Por favor, intenta recargar la página o vuelve más tarde.</p>;
+
 
   return (
-    <section className="catalog">
-    
-      {games.map((game) => (
-        <div className="card" key={game.id_videogame}>
-          <img
-            src={game.url_image || "default-image-url.jpg"}
-            alt={`Carátula de ${game.name}`}
-            className="game-cover"
-          />
-          <div className="card-content">
-            <h3 className="game-title">{game.name}</h3>
-            <p className="language">Idioma: {game.language}</p>
-            <p className="language">Platform: {game.platform}</p>
-            <div
-              className={`status ${game.avaible ? "avaible" : "out-of-stock"}`}
-            >
-              {game.avaible ? "Disponible" : "Agotado"}
-            </div>
-            <button
-              className="btn-gameplay"
-              data-video={game.video_id}
-              onClick={(e) => {
-                if (game.video_id) {
-                  handleGameplayButtonClick(game.video_id, e);
-                } else {
-                  console.warn(`No hay video para ${game.name}`);
-                }
-              }}
-            >
-              Ver Gameplay
-            </button>
-            <button
-              className="btn-hide-gameplay"
-              style={{ display: "none" }}
-              onClick={handleHideButtonClick}
-            >
-              Ocultar Gameplay
-            </button>
-            <div className="gameplay-container" style={{ display: "none" }}>
-              <iframe
-                className="gameplay-video"
-                src=""
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+    <section className="catalog-container">
+      <div className="search-filter-container">
+        <input
+          type="text"
+          placeholder="Buscar por nombre..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
+        />
+        <div className="platform-filter">
+          <label>
+            <input
+              type="radio"
+              value=""
+              checked={filterPlatform === ""}
+              onChange={(e) => setFilterPlatform(e.target.value)}
+            />
+            Todos
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="PS4"
+              checked={filterPlatform === "PS4"}
+              onChange={(e) => setFilterPlatform(e.target.value)}
+            />
+            PS4
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="PS5"
+              checked={filterPlatform === "PS5"}
+              onChange={(e) => setFilterPlatform(e.target.value)}
+            />
+            PS5
+          </label>
+        </div>
+      </div>
+
+      <section className="catalog">
+        {filteredGames.map((game) => (
+          <div className="card" key={game.id_videogame}>
+            <img
+              src={game.url_image || "default-image-url.jpg"}
+              alt={`Carátula de ${game.name}`}
+              className="game-cover"
+            />
+            <div className="card-content">
+              <h3 className="game-title">{game.name}</h3>
+              <p className="language">Idioma: {game.language}</p>
+              <p className="language">Plataforma: {game.platform}</p>
+              <p>Stock: </p>
+              <div
+                className={`status ${
+                  game.avaible ? "avaible" : "out-of-stock"
+                }`}
+              >
+                {game.avaible ? "Disponible" : "Agotado"}
+              </div>
+              <button
+                className="btn-gameplay"
+                data-video={game.video_id}
+                onClick={(e) => {
+                  if (game.video_id) {
+                    handleGameplayButtonClick(game.video_id, e);
+                  } else {
+                    console.warn(`No hay video para ${game.name}`);
+                  }
+                }}
+              >
+                Ver Gameplay
+              </button>
+              <button
+                className="btn-hide-gameplay"
+                style={{ display: "none" }}
+                onClick={handleHideButtonClick}
+              >
+                Ocultar Gameplay
+              </button>
+              <div className="gameplay-container" style={{ display: "none" }}>
+                <iframe
+                  className="gameplay-video"
+                  src=""
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-      
-      
+        ))}
+      </section>
     </section>
-    
-    
-    
   );
-  
 };
 
 export default Catalogo;
