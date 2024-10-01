@@ -26,7 +26,6 @@ const Catalogo = () => {
     getGames();
   }, []);
 
- 
   const handleGameplayButtonClick = (videoId, event) => {
     const container = event.target.parentElement.querySelector(
       ".gameplay-container"
@@ -55,17 +54,25 @@ const Catalogo = () => {
 
   const filteredGames = useMemo(() => {
     return games
-      .filter(game => game.name.toLowerCase().includes(searchTerm.toLowerCase()))
-      .filter(game => filterPlatform ? game.platform === filterPlatform : true);
+      .filter((game) =>
+        game.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      .filter((game) =>
+        filterPlatform ? game.platform === filterPlatform : true
+      );
   }, [games, searchTerm, filterPlatform]);
 
-
   if (loading) return <p>Cargando...</p>;
-  if (error) return <p>Hubo un problema al cargar los juegos. Por favor, intenta recargar la página o vuelve más tarde.</p>;
-
+  if (error)
+    return (
+      <p>
+        Hubo un problema al cargar los juegos. Por favor, intenta recargar la
+        página o vuelve más tarde.
+      </p>
+    );
 
   return (
-    <section className="catalog-container">
+    <div>
       <div className="search-filter-container">
         <input
           type="text"
@@ -104,61 +111,62 @@ const Catalogo = () => {
           </label>
         </div>
       </div>
-
-      <section className="catalog">
-        {filteredGames.map((game) => (
-          <div className="card" key={game.id_videogame}>
-            <img
-              src={game.url_image || "default-image-url.jpg"}
-              alt={`Carátula de ${game.name}`}
-              className="game-cover"
-            />
-            <div className="card-content">
-              <h3 className="game-title">{game.name}</h3>
-              <p className="language">Idioma: {game.language}</p>
-              <p className="language">Plataforma: {game.platform}</p>
-              <p>Stock: </p>
-              <div
-                className={`status ${
-                  game.avaible ? "avaible" : "out-of-stock"
-                }`}
-              >
-                {game.avaible ? "Disponible" : "Agotado"}
-              </div>
-              <button
-                className="btn-gameplay"
-                data-video={game.video_id}
-                onClick={(e) => {
-                  if (game.video_id) {
-                    handleGameplayButtonClick(game.video_id, e);
-                  } else {
-                    console.warn(`No hay video para ${game.name}`);
-                  }
-                }}
-              >
-                Ver Gameplay
-              </button>
-              <button
-                className="btn-hide-gameplay"
-                style={{ display: "none" }}
-                onClick={handleHideButtonClick}
-              >
-                Ocultar Gameplay
-              </button>
-              <div className="gameplay-container" style={{ display: "none" }}>
-                <iframe
-                  className="gameplay-video"
-                  src=""
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
+      <section className="catalog-container">
+        <section className="catalog">
+          {filteredGames.map((game) => (
+            <div className="card" key={game.id_videogame}>
+              <img
+                src={game.url_image || "default-image-url.jpg"}
+                alt={`Carátula de ${game.name}`}
+                className="game-cover"
+              />
+              <div className="card-content">
+                <h3 className="game-title">{game.name}</h3>
+                <p className="language">Idioma: {game.language}</p>
+                <p className="language">Plataforma: {game.platform}</p>
+                <p>Stock: </p>
+                <div
+                  className={`status ${
+                    game.avaible ? "avaible" : "out-of-stock"
+                  }`}
+                >
+                  {game.avaible ? "Disponible" : "Agotado"}
+                </div>
+                <button
+                  className="btn-gameplay"
+                  data-video={game.video_id}
+                  onClick={(e) => {
+                    if (game.video_id) {
+                      handleGameplayButtonClick(game.video_id, e);
+                    } else {
+                      console.warn(`No hay video para ${game.name}`);
+                    }
+                  }}
+                >
+                  Ver Gameplay
+                </button>
+                <button
+                  className="btn-hide-gameplay"
+                  style={{ display: "none" }}
+                  onClick={handleHideButtonClick}
+                >
+                  Ocultar Gameplay
+                </button>
+                <div className="gameplay-container" style={{ display: "none" }}>
+                  <iframe
+                    className="gameplay-video"
+                    src=""
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </section>
       </section>
-    </section>
+    </div>
   );
 };
 

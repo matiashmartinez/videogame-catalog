@@ -8,6 +8,7 @@ import Footer from './Footer';
 
 import './App.css';
 import Header from './Header';
+import ScrollToTopButton from './ScrollToTopButton';
 
 const RouterController = () => {
   return (
@@ -19,7 +20,7 @@ const RouterController = () => {
         <Route path="/catalogo" element={<Catalogo />} />
       
       </Routes>
-      
+      <ScrollToTopButton />
      <Footer />
      </div>
       
