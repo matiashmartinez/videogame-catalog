@@ -38,7 +38,7 @@ body {
   margin: 0 auto; 
   position: sticky; 
   top: 0; 
-  background-color: white; 
+  background-color: #0f0f0f; 
   z-index: 1000; 
   padding: 10px; 
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
