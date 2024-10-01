@@ -10,19 +10,20 @@ import './App.css';
 import Header from './Header';
 import ScrollToTopButton from './ScrollToTopButton';
 
+
 const RouterController = () => {
   return (
     <Router>
-     <div className='contenedor'>
+     
      <Header />
       <Routes>
         <Route path="/" element={<Catalogo />} />
         <Route path="/catalogo" element={<Catalogo />} />
-      
+        
       </Routes>
-      <ScrollToTopButton />
+      
      <Footer />
-     </div>
+     <ScrollToTopButton />
       
     </Router>
   );

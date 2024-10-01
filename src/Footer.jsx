@@ -1,4 +1,4 @@
-import ScrollToTopButton from "./ScrollToTopButton";
+
 import './App.css';
 const Footer = () => {
   return (
@@ -12,8 +12,8 @@ const Footer = () => {
         >
           Contactar por WhatsApp
         </a>
+      
       </footer>
-      <ScrollToTopButton />
     </div>
     
   );

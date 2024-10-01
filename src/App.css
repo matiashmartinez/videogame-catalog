@@ -267,11 +267,11 @@ footer {
 
   .search-filter-container {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: row;
+    gap: 5px;
     margin: 0; /* Eliminar el margen inferior */
     width: 100%;
-    max-width: 1200px; 
+    max-width: 768px; 
     margin: 0 auto; 
     position: sticky; 
     top: 0; 
