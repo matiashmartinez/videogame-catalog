@@ -32,13 +32,13 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-bottom: 20px;
+  margin: 0; /* Eliminar el margen inferior */
   width: 100%;
   max-width: 1200px; 
   margin: 0 auto; 
   position: sticky; 
   top: 0; 
-  background-color: #007bff; 
+  background-color: #007bff; /* Mismo color que el header */
   z-index: 1000; 
   padding: 10px; 
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
@@ -265,21 +265,21 @@ footer {
     grid-template-columns: 1fr; 
   }
 
-.search-filter-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-bottom: 200px;
-  width: 100%;
-  max-width: 1200px; 
-  margin: 0 auto; 
-  position: sticky; 
-  top: 0; 
-  background-color: #007bff; 
-  z-index: 1000; 
-  padding: 10px; 
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
-}
+  .search-filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 0; /* Eliminar el margen inferior */
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto; 
+    position: sticky; 
+    top: 0; 
+    background-color: #007bff; /* Mismo color que el header */
+    z-index: 1000; 
+    padding: 10px; 
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
+  }
 
   .search-bar {
     width: 60%;
