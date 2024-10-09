@@ -292,7 +292,15 @@ footer {
   }
 
   footer {
-    padding: 1rem;
+    position: fixed;  /* Mantiene el footer fijo */
+    bottom: 0;        /* Alinea el footer en la parte inferior */
+    left: 0;          /* Alinea el footer al lado izquierdo */
+    width: 100%;      /* Hace que el footer ocupe todo el ancho */
+    background-color: #007bff;  /* Color de fondo */
+    color: white;     /* Color del texto */
+    text-align: center;  /* Centra el texto */
+    padding: 1rem;    /* Espaciado interno */
+    z-index: 1000;    /* Asegura que el footer esté por encima de otros elementos */
   }
 }
 
