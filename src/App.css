@@ -240,11 +240,11 @@ footer {
 /* Botón flotante para volver al inicio */
 .scroll-to-top {
   position: fixed;
-  bottom: 2rem;
+  bottom: 4rem;
   right: 2rem;
   width: 60px;
   height: 60px;
-  background-color: #007bff;
+  background-color: #25d366;
   color: rgb(8, 60, 190);
   border-radius: 50%;
   text-align: center;
@@ -318,10 +318,19 @@ footer {
     padding-right: 20px;
   }
 
-  footer {
-    padding: 2rem 10vw;
-    margin-top: auto;
-  }
+/* Estilos del footer */
+footer {
+  position: fixed;  /* Mantiene el footer fijo */
+  bottom: 0;        /* Alinea el footer en la parte inferior */
+  left: 0;          /* Alinea el footer al lado izquierdo */
+  width: 100%;      /* Hace que el footer ocupe todo el ancho */
+  background-color: #007bff;  /* Color de fondo */
+  color: white;     /* Color del texto */
+  text-align: center;  /* Centra el texto */
+  padding: 1rem;    /* Espaciado interno */
+  z-index: 1000;    /* Asegura que el footer esté por encima de otros elementos */
+}
+
 }
 
 /* Header */
