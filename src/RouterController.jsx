@@ -7,7 +7,7 @@ import Footer from './Footer';
 
 
 import './App.css';
-import Header from './Header';
+
 import ScrollToTopButton from './ScrollToTopButton';
 
 
@@ -15,7 +15,7 @@ const RouterController = () => {
   return (
     <Router>
      
-     <Header />
+    
       <Routes>
         <Route path="/" element={<Catalogo />} />
         <Route path="/catalogo" element={<Catalogo />} />

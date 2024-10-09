@@ -23,7 +23,7 @@ body {
 /* Catálogo */
 .catalog {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Dos columnas por defecto */
+  grid-template-columns: repeat(3, 1fr); /* Dos columnas por defecto */
   gap: 20px;
   padding: 2rem;
 }
@@ -245,7 +245,7 @@ footer {
   width: 60px;
   height: 60px;
   background-color: #007bff;
-  color: white;
+  color: rgb(8, 60, 190);
   border-radius: 50%;
   text-align: center;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
@@ -326,6 +326,7 @@ footer {
 
 /* Header */
 .header {
+  display: flex;
   width: 100%;
   background-color: #007bff;
   position: sticky;
@@ -355,11 +356,6 @@ footer {
   text-decoration: none;
   color: white;
   font-size: 1.2rem;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+
 }
 
-.header nav ul li a:hover {
-  transform: scale(1.05);
-  color: #25d366;
-  font-size: 24px;
-}

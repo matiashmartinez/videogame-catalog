@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { supabase } from "./supabaseClient";
+import { handleGameplayButtonClick, handleHideButtonClick } from './UtilGamePlay';
+import SearchBar from './SearchBar';  // Importar el componente SearchBar
 
 const Catalogo = () => {
   const [games, setGames] = useState([]);
@@ -26,32 +28,6 @@ const Catalogo = () => {
     getGames();
   }, []);
 
-  const handleGameplayButtonClick = (videoId, event) => {
-    const container = event.target.parentElement.querySelector(
-      ".gameplay-container"
-    );
-    const iframe = container.querySelector("iframe");
-    const hideButton = event.target.nextElementSibling;
-
-    container.style.display = "block";
-    event.target.style.display = "none";
-    hideButton.style.display = "inline-block";
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1&modestbranding=1`;
-  };
-
-  const handleHideButtonClick = (event) => {
-    const container = event.target.parentElement.querySelector(
-      ".gameplay-container"
-    );
-    const showButton = event.target.previousElementSibling;
-    const iframe = container.querySelector("iframe");
-
-    container.style.display = "none";
-    event.target.style.display = "none";
-    showButton.style.display = "inline-block";
-    iframe.src = "";
-  };
-
   const filteredGames = useMemo(() => {
     return games
       .filter((game) =>
@@ -73,44 +49,14 @@ const Catalogo = () => {
 
   return (
     <div>
-      <div className="search-filter-container">
-        <input
-          type="text"
-          placeholder="Buscar por nombre..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-bar"
-        />
-        <div className="platform-filter">
-          <label>
-            <input
-              type="radio"
-              value=""
-              checked={filterPlatform === ""}
-              onChange={(e) => setFilterPlatform(e.target.value)}
-            />
-            Todos
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="PS4"
-              checked={filterPlatform === "PS4"}
-              onChange={(e) => setFilterPlatform(e.target.value)}
-            />
-            PS4
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="PS5"
-              checked={filterPlatform === "PS5"}
-              onChange={(e) => setFilterPlatform(e.target.value)}
-            />
-            PS5
-          </label>
-        </div>
-      </div>
+      {/* Renderizar el SearchBar y pasar los props */}
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        filterPlatform={filterPlatform}
+        setFilterPlatform={setFilterPlatform}
+      />
+
       <section className="catalog-container">
         <section className="catalog">
           {filteredGames.map((game) => (
@@ -126,9 +72,7 @@ const Catalogo = () => {
                 <p className="language">Plataforma: {game.platform}</p>
                 <p>Stock: </p>
                 <div
-                  className={`status ${
-                    game.avaible ? "avaible" : "out-of-stock"
-                  }`}
+                  className={`status ${game.avaible ? "avaible" : "out-of-stock"}`}
                 >
                   {game.avaible ? "Disponible" : "Agotado"}
                 </div>
