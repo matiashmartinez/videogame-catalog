@@ -5,7 +5,7 @@ const Footer = () => {
     <div >
       <footer className="footer">
         <a
-          href="https://wa.me/542615734324"
+          href="https://wa.me/"
           target="_blank"
           rel="noopener noreferrer"
           className="contact-button"
