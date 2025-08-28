@@ -1,10 +1,11 @@
 import Navbar from './Navbar';
 import Footer from './Footer';
-
+import ScrollToTopButton from './ScrollToTopButton';
 const Layout = ({ children }) => {
     return (
         <div className="flex flex-col min-h-screen bg-gray-900 text-white">
             <Navbar />
+            <ScrollToTopButton />
             <main className="flex-grow">{children}</main>
             <Footer />
         </div>

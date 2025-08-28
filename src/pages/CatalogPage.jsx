@@ -1,8 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../supabaseClient';
-import SearchBar from '../components/SearchBar';
-import FilterBar from '../components/FilterBar';
-import ViewToggle from '../components/ViewToggle';
+import CatalogToolbar from '../components/CatalogToolbar';
 import GameCard from '../components/GameCard';
 
 const CatalogPage = () => {
@@ -12,6 +10,7 @@ const CatalogPage = () => {
   const [filterAvailability, setFilterAvailability] = useState('');
   const [viewMode, setViewMode] = useState('card');
   const [activeGameplayId, setActiveGameplayId] = useState(null);
+  const [sortOption, setSortOption] = useState('az');
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -22,25 +21,49 @@ const CatalogPage = () => {
   }, []);
 
   const filteredGames = useMemo(() => {
-    return games.filter((game) =>
+    let result = games.filter((game) =>
       game.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (filterPlatform ? game.platform === filterPlatform : true) &&
       (filterAvailability ? game.avaible === (filterAvailability === 'available') : true)
     );
-  }, [games, searchTerm, filterPlatform, filterAvailability]);
+
+    switch (sortOption) {
+      case 'az':
+        result.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'za':
+        result.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+      case 'recent':
+        result.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        break;
+      case 'oldest':
+        result.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+        break;
+      default:
+        break;
+    }
+
+    return result;
+  }, [games, searchTerm, filterPlatform, filterAvailability, sortOption]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white px-4 py-8">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-bold text-center text-green-400 mb-6">Catálogo Gamer</h1>
-        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <FilterBar
-          filterPlatform={filterPlatform}
-          setFilterPlatform={setFilterPlatform}
-          filterAvailability={filterAvailability}
-          setFilterAvailability={setFilterAvailability}
+        <CatalogToolbar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          selectedPlatform={filterPlatform}
+          setSelectedPlatform={setFilterPlatform}
+          selectedAvailability={filterAvailability}
+          setSelectedAvailability={setFilterAvailability}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+          platforms={[...new Set(games.map((g) => g.platform))]} // genera dinámicamente
         />
-        <ViewToggle viewMode={viewMode} setViewMode={setViewMode} />
         <div className={`grid gap-4 ${viewMode === 'card' ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1'}`}>
           {filteredGames.map((game) => (
             <GameCard
