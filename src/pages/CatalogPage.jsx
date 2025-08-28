@@ -21,31 +21,40 @@ const CatalogPage = () => {
   }, []);
 
   const filteredGames = useMemo(() => {
-    let result = games.filter((game) =>
-      game.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (filterPlatform ? game.platform === filterPlatform : true) &&
-      (filterAvailability ? game.avaible === (filterAvailability === 'available') : true)
+  let result = [...games];
+
+  // Filtro por búsqueda
+  if (searchTerm) {
+    result = result.filter((game) =>
+      game.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+  }
 
-    switch (sortOption) {
-      case 'az':
-        result.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case 'za':
-        result.sort((a, b) => b.name.localeCompare(a.name));
-        break;
-      case 'recent':
-        result.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-        break;
-      case 'oldest':
-        result.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-        break;
-      default:
-        break;
-    }
+  // Filtro por plataforma
+  if (filterPlatform) {
+    result = result.filter((game) => game.platform === filterPlatform);
+  }
 
-    return result;
-  }, [games, searchTerm, filterPlatform, filterAvailability, sortOption]);
+  // Filtro por disponibilidad
+  if (filterAvailability) {
+    const isAvailable = filterAvailability === 'true';
+    result = result.filter((game) => game.avaible === isAvailable);
+  }
+
+  // Ordenamiento
+  if (sortOption === 'az') {
+    result.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortOption === 'za') {
+    result.sort((a, b) => b.name.localeCompare(a.name));
+  } else if (sortOption === 'recent') {
+    result.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  } else if (sortOption === 'oldest') {
+    result.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  }
+
+  return result;
+}, [games, searchTerm, filterPlatform, filterAvailability, sortOption]);
+
 
   return (
     <div className="min-h-screen bg-gray-900 text-white px-4 py-8">
