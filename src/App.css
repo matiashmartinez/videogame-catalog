@@ -1,0 +1,378 @@
+/* Estilos generales del catálogo */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Asegura que padding no afecte el tamaño del elemento */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #0f0f0f; /* Fondo oscuro */
+  color: #ddd;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor del catálogo */
+.catalog-container {
+  flex: 1;
+  padding: 20px;
+}
+
+/* Catálogo */
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Dos columnas por defecto */
+  gap: 20px;
+  padding: 2rem;
+}
+
+.search-filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 0; /* Eliminar el margen inferior */
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto; 
+  position: sticky; 
+  top: 0; 
+  background-color: #007bff; /* Mismo color que el header */
+  z-index: 1000; 
+  padding: 10px; 
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+.search-bar {
+  width: 100%;
+  min-width: 250px; 
+  max-width: 600px; 
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; 
+}
+
+.search-bar:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.platform-filter {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 50%;
+  max-width: 400px;
+  margin: 0 auto; 
+  flex-wrap: wrap; 
+}
+
+.platform-filter label {
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.platform-filter input {
+  margin-right: 8px;
+  accent-color: #007bff;
+}
+
+
+/* Tarjetas del catálogo */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(145deg, #333, #555);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  min-height: 500px;
+  border: 6px solid transparent;
+}
+
+/* Contorno RGB animado */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 12px);
+  background: linear-gradient(45deg, #ff0000, #0000ff);
+  background-size: 400% 400%;
+  border-radius: 10px;
+  z-index: -1;
+  animation: rgb-animation 3s linear infinite;
+}
+
+@keyframes rgb-animation {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+/* Efecto hover en los cards */
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.6s ease;
+}
+
+/* Botón de ocultar gameplay */
+.btn-hide-gameplay {
+  background-color: #dc3545;
+  display: none;
+}
+
+.btn-hide-gameplay:hover {
+  background-color: #c82333;
+}
+
+/* Ajuste para imágenes */
+.card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  text-align: center;
+}
+
+.game-title {
+  font-size: 1.5rem;
+  margin: 1rem 0;
+}
+
+.language, .price {
+  margin: 0.5rem 0;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.2rem 0.5rem; 
+  font-weight: normal; 
+  border-radius: 3px; 
+  color: white;
+  background-color: #4CAF50;
+  font-size: 0.9rem; 
+  text-align: center;
+  margin: 0 auto;
+  min-width: 80px;
+  white-space: nowrap;
+  box-shadow: none; 
+  letter-spacing: 0.5px; 
+}
+
+.status.available {
+  background-color: #4CAF50; 
+}
+
+.status.out-of-stock {
+  background-color: #F44336; 
+}
+
+.status.in-transit {
+  background-color: #FFC107; 
+}
+
+.btn-gameplay, .btn-hide-gameplay {
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0.5rem auto;
+}
+
+.btn-gameplay:hover {
+  background-color: #0056b3;
+}
+
+.gameplay-container {
+  display: none;
+  margin-top: 1rem;
+}
+
+.gameplay-video {
+  width: 100%;
+  height: 250px;
+  border-radius: 5px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 2rem;
+  background-color: #007bff;
+  color: white;
+  margin-top: auto; 
+}
+
+/* Contact Button */
+.contact-button {
+  background-color: #25d366;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+.contact-button:hover {
+  background-color: #128c7e;
+}
+
+/* Botón flotante para volver al inicio */
+.scroll-to-top {
+  position: fixed;
+  bottom: 4rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  background-color: #25d366;
+  color: rgb(8, 60, 190);
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: inline;
+  transition: transform 0.3s ease;
+}
+
+.scroll-to-top:hover {
+  transform: scale(1.1);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .catalog {
+    grid-template-columns: 1fr; 
+  }
+
+  .search-filter-container {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin: 0; /* Eliminar el margen inferior */
+    width: 100%;
+    max-width: 768px; 
+    margin: 0 auto; 
+    position: sticky; 
+    top: 0; 
+    background-color: #007bff; /* Mismo color que el header */
+    z-index: 1000; 
+    padding: 10px; 
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
+  }
+
+  .search-bar {
+    width: 60%;
+  }
+
+  .platform-filter {
+    width: 35%;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+
+  footer {
+    position: fixed;  /* Mantiene el footer fijo */
+    bottom: 0;        /* Alinea el footer en la parte inferior */
+    left: 0;          /* Alinea el footer al lado izquierdo */
+    width: 100%;      /* Hace que el footer ocupe todo el ancho */
+    background-color: #007bff;  /* Color de fondo */
+    color: white;     /* Color del texto */
+    text-align: center;  /* Centra el texto */
+    padding: 1rem;    /* Espaciado interno */
+    z-index: 1000;    /* Asegura que el footer esté por encima de otros elementos */
+  }
+}
+
+@media (min-width: 1100px) {
+  .catalog {
+    padding: 2rem 10vw;
+  }
+
+  .search-filter-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .search-bar {
+    width: 100%;
+  }
+
+  .platform-filter {
+    width: 35%;
+    justify-content: flex-end;
+    gap: 15px;
+    padding-right: 20px;
+  }
+
+/* Estilos del footer */
+footer {
+  position: fixed;  /* Mantiene el footer fijo */
+  bottom: 0;        /* Alinea el footer en la parte inferior */
+  left: 0;          /* Alinea el footer al lado izquierdo */
+  width: 100%;      /* Hace que el footer ocupe todo el ancho */
+  background-color: #007bff;  /* Color de fondo */
+  color: white;     /* Color del texto */
+  text-align: center;  /* Centra el texto */
+  padding: 1rem;    /* Espaciado interno */
+  z-index: 1000;    /* Asegura que el footer esté por encima de otros elementos */
+}
+
+}
+
+/* Header */
+.header {
+  display: flex;
+  width: 100%;
+  background-color: #007bff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header nav {
+  display: flex;
+  justify-content: center;
+}
+
+.header nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.header nav li {
+  margin: 0 1.5rem;
+}
+
+.header nav a {
+  display: block;
+  padding: 1.5rem 0;
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+
+}
+
