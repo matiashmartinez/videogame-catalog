@@ -1,27 +1,38 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import CatalogPage from './pages/CatalogPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
+import EditGame from './pages/EditGame';
 import Layout from './components/Layout';
-import EditGame from './pages/EditGame'
-
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
-  const location = useLocation();
-  const isLoginRoute = location.pathname === '/admin';
-
-  return isLoginRoute ? (
+  return (
     <Routes>
+      {/* Ruta pública sin layout */}
       <Route path="/admin" element={<AdminLogin />} />
-    </Routes>
-  ) : (
-    <Layout>
-      <Routes>
+
+      {/* Rutas protegidas con layout */}
+      <Route element={<Layout />}>
         <Route path="/" element={<CatalogPage />} />
-        <Route path="/dashboard" element={<AdminDashboard />} />
-        <Route path='/edit/:id' element={<EditGame />} />
-      </Routes>
-    </Layout>
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit/:id"
+          element={
+            <ProtectedRoute>
+              <EditGame />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+    </Routes>
   );
 }
 
