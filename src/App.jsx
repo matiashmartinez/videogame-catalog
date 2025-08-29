@@ -3,6 +3,7 @@ import CatalogPage from './pages/CatalogPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import Layout from './components/Layout';
+import EditGame from './pages/EditGame'
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<CatalogPage />} />
         <Route path="/dashboard" element={<AdminDashboard />} />
+        <Route path='/edit/:id' element={<EditGame />} />
       </Routes>
     </Layout>
   );

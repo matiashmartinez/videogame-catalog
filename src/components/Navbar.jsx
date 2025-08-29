@@ -1,26 +1,30 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useAdmin } from '../context/AdminContext';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [session, setSession] = useState(null);
+  const { isAdmin, setIsAdmin } = useAdmin();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
+      setIsAdmin(!!session);
     });
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
+      setIsAdmin(!!session);
     });
 
     return () => listener?.subscription.unsubscribe();
-  }, []);
+  }, [setIsAdmin]);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+    setIsAdmin(false);
+    toast.success('Sesión cerrada');
     navigate('/');
   };
 
@@ -31,25 +35,34 @@ const Navbar = () => {
           🎮 GameCatalog
         </Link>
 
-        <div className="flex items-center gap-4 text-white">
-          <Link to="/" className={`${location.pathname === '/' ? 'font-bold' : ''}`}>
+        <div className="flex items-center gap-4 text-white text-sm">
+          <Link
+            to="/"
+            className={`${location.pathname === '/' ? 'font-bold text-green-400' : 'hover:text-green-300'}`}
+          >
             Catálogo
           </Link>
 
-          {session ? (
+          {isAdmin ? (
             <>
-              <Link to="/dashboard" className={`${location.pathname === '/dashboard' ? 'font-bold' : ''}`}>
+              <Link
+                to="/dashboard"
+                className={`${location.pathname === '/dashboard' ? 'font-bold text-green-400' : 'hover:text-green-300'}`}
+              >
                 Admin
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-sm bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-medium"
+                className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-medium"
               >
                 Cerrar sesión
               </button>
             </>
           ) : (
-            <Link to="/admin" className={`${location.pathname === '/admin' ? 'font-bold' : ''}`}>
+            <Link
+              to="/admin"
+              className={`${location.pathname === '/admin' ? 'font-bold text-green-400' : 'hover:text-green-300'}`}
+            >
               Admin
             </Link>
           )}

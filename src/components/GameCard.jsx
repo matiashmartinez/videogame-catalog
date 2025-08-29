@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useWhatsapp } from '../context/WhatsappContext';
 import { FaThLarge, FaList } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { useAdmin } from '../context/AdminContext';
+
 
 const GameIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -19,6 +22,8 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId }) => 
     const [imageError, setImageError] = useState(false);
     const whatsapp = useWhatsapp();
     const message = encodeURIComponent(`¡Hola! Estoy interesado en el juego "${game.name}"`);
+    const { isAdmin } = useAdmin();
+    const navigate = useNavigate();
 
     const handleVideoToggle = () => {
         setActiveGameplayId(activeGameplayId === game.video_id ? null : game.video_id);
@@ -90,7 +95,7 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId }) => 
                 <div className={`flex gap-3 mt-auto ${viewMode !== 'card' ? 'flex-col sm:flex-row' : 'flex-col sm:flex-row'}`}>
                     <button
                         onClick={handleVideoToggle}
-                        className="flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none rounded-lg text-sm font-medium transition-colors duration-200 w-full"
+                        className="flex items-center justify-center px-4 py-2 bg-blue-600 hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none rounded-lg text-sm font-medium transition-colors duration-200 w-full cursor-pointer"
                     >
                         <GameIcon />
                         {activeGameplayId === game.video_id ? 'Ocultar Gameplay' : 'Ver Gameplay'}
@@ -115,6 +120,15 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId }) => 
                         >
                             <WhatsAppIcon />
                             Consultar
+                        </button>
+                    )}
+                    {isAdmin && (
+                        <button
+                            onClick={() => navigate(`/edit/${game.id_videogame}`)}
+                            className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-300 w-full cursor-pointer"
+                        >
+                            <span className="text-lg">✏️</span>
+                            <span>Editar</span>
                         </button>
                     )}
                 </div>
