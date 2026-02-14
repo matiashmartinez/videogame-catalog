@@ -35,10 +35,21 @@ const AdminLogin = () => {
         onSubmit={handleLogin}
         className="bg-gray-800 border border-gray-700 p-6 rounded-md w-full max-w-sm shadow-lg"
       >
+        <div className="max-w-fit mx-auto my-6 p-4 bg-gray-900 border-l-4 border-green-500 rounded-r-lg shadow-lg font-mono text-sm text-gray-300">
+  <p className="flex flex-col sm:flex-row gap-2 sm:gap-6 justify-center items-center">
+    <span>
+      Usuario: <span className="text-green-400 font-bold select-all">admin@catalogvideogame.com</span>
+    </span>
+    <span className="hidden sm:inline text-gray-600">|</span>
+    <span>
+      Pass: <span className="text-green-400 font-bold select-all">admin</span>
+    </span>
+  </p>
+</div>
         <h2 className="text-2xl font-bold mb-4 text-green-400 text-center">Login Admin</h2>
 
         {errorMsg && <p className="text-red-500 mb-2 text-sm">{errorMsg}</p>}
-
+        
         <input
           type="email"
           placeholder="Correo electrónico"
@@ -65,7 +76,7 @@ const AdminLogin = () => {
         {/* Botón Agregado para volver */}
         <button
           type="button"
-          onClick={() => navigate('/')} // Asumiendo que '/' es tu catálogo principal
+          onClick={() => navigate('/')} 
           className="w-full mt-4 bg-transparent hover:bg-gray-700 text-gray-400 hover:text-white py-2 rounded border border-gray-600 transition-colors"
         >
           Volver al catálogo
