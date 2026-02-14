@@ -125,9 +125,9 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId }) => 
                     {isAdmin && (
                         <button
                             onClick={() => navigate(`/edit/${game.id_videogame}`)}
-                            className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-300 w-full cursor-pointer"
+                            className="flex items-center justify-center gap-2 px-2 py-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold rounded-lg text-sm shadow-md hover:shadow-lg transition-all duration-300 w-full cursor-pointer"
                         >
-                            <span className="text-lg">✏️</span>
+                            <span className="text-sm">✏️</span>
                             <span>Editar</span>
                         </button>
                     )}
