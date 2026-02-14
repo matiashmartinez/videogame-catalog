@@ -22,5 +22,5 @@ export const WhatsappProvider = ({ children }) => {
 };
 
 export const useWhatsapp = () => {
-  return useContext(WhatsappContext); // ya puede ser null al inicio, y es normal
+  return useContext(WhatsappContext); // ya puede ser null al inicio
 };

@@ -1,378 +1,1297 @@
-/* Estilos generales del catálogo */
+/* =========================================
+   1. CONFIGURACIÓN BASE Y VARIABLES
+   ========================================= */
+:root {
+  --primary: #007bff;
+  --primary-dark: #0056b3;
+  --primary-glow: rgba(0, 123, 255, 0.4);
+  --whatsapp: #25d366;
+  --whatsapp-dark: #1ebe57;
+  --bg-dark: #0f0f0f;
+  --bg-card: #1f2937;
+  --bg-card-hover: #2d3748;
+  --text-main: #e5e7eb;
+  --header-height: 80px;
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --glow-spread: 20px;
+}
+
+/* Scroll suave para toda la página */
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Asegura que padding no afecte el tamaño del elemento */
+  box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #0f0f0f; /* Fondo oscuro */
-  color: #ddd;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
-/* Contenedor del catálogo */
-.catalog-container {
-  flex: 1;
-  padding: 20px;
-}
-
-/* Catálogo */
-.catalog {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Dos columnas por defecto */
-  gap: 20px;
-  padding: 2rem;
-}
-
-.search-filter-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin: 0; /* Eliminar el margen inferior */
-  width: 100%;
-  max-width: 1200px; 
-  margin: 0 auto; 
-  position: sticky; 
-  top: 0; 
-  background-color: #007bff; /* Mismo color que el header */
-  z-index: 1000; 
-  padding: 10px; 
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
-}
-
-.search-bar {
-  width: 100%;
-  min-width: 250px; 
-  max-width: 600px; 
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box; 
-}
-
-.search-bar:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.platform-filter {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  width: 50%;
-  max-width: 400px;
-  margin: 0 auto; 
-  flex-wrap: wrap; 
-}
-
-.platform-filter label {
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.platform-filter input {
-  margin-right: 8px;
-  accent-color: #007bff;
-}
-
-
-/* Tarjetas del catálogo */
-.card {
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(145deg, #333, #555);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  min-height: 500px;
-  border: 6px solid transparent;
-}
-
-/* Contorno RGB animado */
-.card::before {
+/* Fondo animado sutil con partículas */
+body::before {
   content: '';
-  position: absolute;
-  top: 6px;
-  left: 6px;
-  width: calc(100% + 12px);
-  height: calc(100% + 12px);
-  background: linear-gradient(45deg, #ff0000, #0000ff);
-  background-size: 400% 400%;
-  border-radius: 10px;
-  z-index: -1;
-  animation: rgb-animation 3s linear infinite;
-}
-
-@keyframes rgb-animation {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 100% 100%; }
-}
-
-/* Efecto hover en los cards */
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  transition: transform 0.6s ease;
-}
-
-/* Botón de ocultar gameplay */
-.btn-hide-gameplay {
-  background-color: #dc3545;
-  display: none;
-}
-
-.btn-hide-gameplay:hover {
-  background-color: #c82333;
-}
-
-/* Ajuste para imágenes */
-.card img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-}
-
-.card-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1rem;
-  text-align: center;
-}
-
-.game-title {
-  font-size: 1.5rem;
-  margin: 1rem 0;
-}
-
-.language, .price {
-  margin: 0.5rem 0;
-}
-
-.status {
-  display: inline-block;
-  padding: 0.2rem 0.5rem; 
-  font-weight: normal; 
-  border-radius: 3px; 
-  color: white;
-  background-color: #4CAF50;
-  font-size: 0.9rem; 
-  text-align: center;
-  margin: 0 auto;
-  min-width: 80px;
-  white-space: nowrap;
-  box-shadow: none; 
-  letter-spacing: 0.5px; 
-}
-
-.status.available {
-  background-color: #4CAF50; 
-}
-
-.status.out-of-stock {
-  background-color: #F44336; 
-}
-
-.status.in-transit {
-  background-color: #FFC107; 
-}
-
-.btn-gameplay, .btn-hide-gameplay {
-  background-color: #007bff;
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-  margin: 0.5rem auto;
-}
-
-.btn-gameplay:hover {
-  background-color: #0056b3;
-}
-
-.gameplay-container {
-  display: none;
-  margin-top: 1rem;
-}
-
-.gameplay-video {
-  width: 100%;
-  height: 250px;
-  border-radius: 5px;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 2rem;
-  background-color: #007bff;
-  color: white;
-  margin-top: auto; 
-}
-
-/* Contact Button */
-.contact-button {
-  background-color: #25d366;
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 5px;
-  text-decoration: none;
-  font-size: 1.25rem;
-}
-
-.contact-button:hover {
-  background-color: #128c7e;
-}
-
-/* Botón flotante para volver al inicio */
-.scroll-to-top {
   position: fixed;
-  bottom: 4rem;
-  right: 2rem;
-  width: 60px;
-  height: 60px;
-  background-color: #25d366;
-  color: rgb(8, 60, 190);
-  border-radius: 50%;
-  text-align: center;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  font-size: 1.5rem;
-  display: inline;
-  transition: transform 0.3s ease;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0, 123, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(37, 211, 102, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(122, 0, 255, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  animation: bg-shift 20s ease-in-out infinite alternate;
 }
 
-.scroll-to-top:hover {
-  transform: scale(1.1);
+@keyframes bg-shift {
+  0% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0.5; transform: scale(1); }
 }
 
-/* Estilos responsivos */
-@media (max-width: 768px) {
-  .catalog {
-    grid-template-columns: 1fr; 
-  }
-
-  .search-filter-container {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    margin: 0; /* Eliminar el margen inferior */
-    width: 100%;
-    max-width: 768px; 
-    margin: 0 auto; 
-    position: sticky; 
-    top: 0; 
-    background-color: #007bff; /* Mismo color que el header */
-    z-index: 1000; 
-    padding: 10px; 
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
-  }
-
-  .search-bar {
-    width: 60%;
-  }
-
-  .platform-filter {
-    width: 35%;
-    justify-content: flex-end;
-    gap: 20px;
-  }
-
-  footer {
-    position: fixed;  /* Mantiene el footer fijo */
-    bottom: 0;        /* Alinea el footer en la parte inferior */
-    left: 0;          /* Alinea el footer al lado izquierdo */
-    width: 100%;      /* Hace que el footer ocupe todo el ancho */
-    background-color: #007bff;  /* Color de fondo */
-    color: white;     /* Color del texto */
-    text-align: center;  /* Centra el texto */
-    padding: 1rem;    /* Espaciado interno */
-    z-index: 1000;    /* Asegura que el footer esté por encima de otros elementos */
-  }
-}
-
-@media (min-width: 1100px) {
-  .catalog {
-    padding: 2rem 10vw;
-  }
-
-  .search-filter-container {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .search-bar {
-    width: 100%;
-  }
-
-  .platform-filter {
-    width: 35%;
-    justify-content: flex-end;
-    gap: 15px;
-    padding-right: 20px;
-  }
-
-/* Estilos del footer */
-footer {
-  position: fixed;  /* Mantiene el footer fijo */
-  bottom: 0;        /* Alinea el footer en la parte inferior */
-  left: 0;          /* Alinea el footer al lado izquierdo */
-  width: 100%;      /* Hace que el footer ocupe todo el ancho */
-  background-color: #007bff;  /* Color de fondo */
-  color: white;     /* Color del texto */
-  text-align: center;  /* Centra el texto */
-  padding: 1rem;    /* Espaciado interno */
-  z-index: 1000;    /* Asegura que el footer esté por encima de otros elementos */
-}
-
-}
-
-/* Header */
+/* =========================================
+   2. HEADER (Glassmorphism Mejorado)
+   ========================================= */
 .header {
   display: flex;
   width: 100%;
-  background-color: #007bff;
+  height: var(--header-height);
+  background: linear-gradient(135deg, rgba(0, 123, 255, 0.85), rgba(0, 86, 179, 0.9));
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   position: sticky;
   top: 0;
   z-index: 1000;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.1) inset;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  animation: header-slide-down 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes header-slide-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Línea brillante inferior animada */
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer-line 3s ease-in-out infinite;
+}
+
+@keyframes shimmer-line {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 .header nav {
+  width: 100%;
   display: flex;
   justify-content: center;
 }
 
 .header nav ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+  list-style: none;
   display: flex;
-}
-
-.header nav li {
-  margin: 0 1.5rem;
+  gap: 2rem;
 }
 
 .header nav a {
-  display: block;
-  padding: 1.5rem 0;
   text-decoration: none;
   color: white;
-  font-size: 1.2rem;
-
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
 }
 
+.header nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  transition: var(--transition);
+  transform: translateX(-50%);
+}
+
+.header nav a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: width 0.6s ease, height 0.6s ease;
+  transform: translate(-50%, -50%);
+}
+
+.header nav a:hover::after {
+  width: 80%;
+}
+
+.header nav a:hover::before {
+  width: 200px;
+  height: 200px;
+}
+
+.header nav a:hover {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Efecto de clic en links del nav */
+.header nav a:active {
+  transform: scale(0.95);
+  transition: transform 0.1s;
+}
+
+/* =========================================
+   3. BARRA DE BÚSQUEDA (Sticky Mejorada)
+   ========================================= */
+.search-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: sticky;
+  top: var(--header-height);
+  z-index: 990;
+  background: rgba(15, 15, 15, 0.92);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  padding: 1rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+  animation: search-fade-in 0.8s ease 0.3s both;
+}
+
+@keyframes search-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-bar {
+  flex: 1;
+  min-width: 280px;
+  padding: 0.8rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid #374151;
+  background-color: #1f2937;
+  color: white;
+  border-radius: 50px;
+  outline: none;
+  transition: var(--transition);
+  position: relative;
+}
+
+.search-bar:focus {
+  border-color: var(--primary);
+  box-shadow:
+    0 0 0 4px rgba(0, 123, 255, 0.25),
+    0 0 20px rgba(0, 123, 255, 0.15);
+  background-color: #2d3748;
+  transform: scale(1.02);
+}
+
+/* Animación de typing placeholder */
+.search-bar::placeholder {
+  transition: var(--transition);
+}
+
+.search-bar:focus::placeholder {
+  opacity: 0.4;
+  transform: translateX(10px);
+}
+
+.platform-filter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.platform-filter label {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: var(--transition);
+  user-select: none;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.platform-filter label::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(0, 123, 255, 0.2);
+  border-radius: 50%;
+  transition: width 0.4s ease, height 0.4s ease;
+  transform: translate(-50%, -50%);
+}
+
+.platform-filter label:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(0, 123, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.platform-filter label:hover::before {
+  width: 200px;
+  height: 200px;
+}
+
+.platform-filter label:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.platform-filter input {
+  accent-color: var(--primary);
+  margin-right: 8px;
+  transform: scale(1.2);
+  transition: var(--transition-fast);
+}
+
+.platform-filter input:checked + span,
+.platform-filter input:checked ~ * {
+  color: var(--primary);
+}
+
+/* =========================================
+   4. CATÁLOGO Y TARJETAS (Cards Mejoradas)
+   ========================================= */
+.catalog-container {
+  flex: 1;
+  width: 100%;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2.5rem;
+  max-width: 1400px;
+  margin: 2rem auto;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  transition: var(--transition);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  /* Animación de entrada escalonada */
+  animation: card-entrance 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+}
+
+/* Animación de aparición de tarjetas */
+@keyframes card-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Escalonamiento con nth-child */
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4) { animation-delay: 0.2s; }
+.card:nth-child(5) { animation-delay: 0.25s; }
+.card:nth-child(6) { animation-delay: 0.3s; }
+.card:nth-child(7) { animation-delay: 0.35s; }
+.card:nth-child(8) { animation-delay: 0.4s; }
+.card:nth-child(9) { animation-delay: 0.45s; }
+.card:nth-child(10) { animation-delay: 0.5s; }
+.card:nth-child(11) { animation-delay: 0.55s; }
+.card:nth-child(12) { animation-delay: 0.6s; }
+
+/* Borde RGB Animado Mejorado con Rotación */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    #ff0000, #ff7300, #fffb00, #48ff00,
+    #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000
+  );
+  z-index: -1;
+  filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  animation: rotate-rgb 3s linear infinite;
+  border-radius: 18px;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-rgb {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* Fallback para navegadores sin @property */
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .card::before {
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    background-size: 400%;
+    animation: rgb-glow 6s linear infinite;
+  }
+}
+
+@keyframes rgb-glow {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+/* Segundo pseudo-elemento para brillo interior */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.03),
+    transparent
+  );
+  transition: left 0.8s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.card:hover::after {
+  left: 150%;
+}
+
+.card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(0, 123, 255, 0.1);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Efecto de clic en la card */
+.card:active {
+  transform: translateY(-6px) scale(0.99);
+  transition: var(--transition-fast);
+}
+
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: var(--transition);
+  filter: brightness(0.95);
+}
+
+.card:hover img {
+  filter: brightness(1.1) contrast(1.05);
+  transform: scale(1.05);
+}
+
+.card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.game-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  transition: var(--transition);
+  background: linear-gradient(135deg, #ffffff, #e0e0e0);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.card:hover .game-title {
+  background: linear-gradient(135deg, #ffffff, var(--primary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 10px auto;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.status::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  animation: status-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes status-shimmer {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+.status.available {
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid #34d399;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.1);
+}
+
+.status.available:hover {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  transform: scale(1.05);
+}
+
+.status.out-of-stock {
+  background-color: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid #f87171;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+}
+
+.status.out-of-stock:hover {
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  transform: scale(1.05);
+}
+
+/* =========================================
+   4.5 BOTONES DE ACCIÓN (Mejorados)
+   ========================================= */
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.btn-gameplay, .btn-action {
+  flex: 1;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+  transition: var(--transition-bounce);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* Efecto Ripple en botones */
+.btn-gameplay::after, .btn-action::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.btn-gameplay:active::after, .btn-action:active::after {
+  animation: ripple-effect 0.6s ease-out;
+}
+
+@keyframes ripple-effect {
+  0% {
+    transform: scale(0) translate(-50%, -50%);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(40) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+.btn-gameplay {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.btn-gameplay:hover {
+  background: linear-gradient(135deg, var(--primary-dark), #003d82);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(0, 123, 255, 0.5);
+}
+
+.btn-gameplay:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+}
+
+.btn-action {
+  background: linear-gradient(135deg, #6b7280, #4b5563);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-action:hover {
+  background: linear-gradient(135deg, #4b5563, #374151);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.btn-action:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* =========================================
+   4.6 VIDEO / GAMEPLAY MODAL EFFECTS
+   ========================================= */
+
+/* Overlay de video con efecto de aparición */
+.video-overlay,
+.gameplay-overlay,
+.modal-overlay,
+[class*="overlay"] {
+  animation: overlay-appear 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes overlay-appear {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Contenedor de video con efecto */
+.video-container,
+.gameplay-container,
+.modal-content,
+[class*="video-modal"],
+[class*="gameplay-modal"] {
+  animation: video-zoom-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(0, 123, 255, 0.15);
+}
+
+@keyframes video-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.7) translateY(30px);
+    filter: blur(10px);
+  }
+  60% {
+    transform: scale(1.03) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Borde brillante animado alrededor del video */
+.video-container::before,
+.gameplay-container::before,
+[class*="video-modal"]::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    var(--primary),
+    #7a00ff,
+    #ff00c8,
+    var(--primary)
+  );
+  border-radius: 18px;
+  z-index: -1;
+  animation: rotate-rgb 4s linear infinite;
+  opacity: 0.8;
+}
+
+/* Video elemento con transiciones */
+.video-container video,
+.gameplay-container video,
+.video-container iframe,
+.gameplay-container iframe,
+[class*="video"] video,
+[class*="video"] iframe {
+  display: block;
+  width: 100%;
+  border-radius: 14px;
+  transition: var(--transition);
+}
+
+/* Efecto al pausar/reproducir */
+.video-container video:hover,
+.gameplay-container video:hover {
+  box-shadow: 0 0 30px rgba(0, 123, 255, 0.3);
+}
+
+/* Botón de cerrar video con efecto */
+.video-close,
+.close-video,
+.modal-close,
+[class*="close"] {
+  transition: var(--transition-bounce) !important;
+}
+
+.video-close:hover,
+.close-video:hover,
+.modal-close:hover {
+  transform: rotate(90deg) scale(1.2) !important;
+  color: #ff4444 !important;
+}
+
+/* Loading spinner para video */
+.video-loading,
+.video-container .loading {
+  animation: video-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes video-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Play button overlay effect */
+.play-button,
+.btn-play,
+[class*="play"] {
+  transition: var(--transition-bounce);
+}
+
+.play-button:hover,
+.btn-play:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 20px rgba(0, 123, 255, 0.6));
+}
+
+.play-button:active,
+.btn-play:active {
+  transform: scale(0.9);
+  animation: play-click 0.3s ease;
+}
+
+@keyframes play-click {
+  0% { transform: scale(1.15); }
+  50% { transform: scale(0.85); }
+  100% { transform: scale(1); }
+}
+
+/* =========================================
+   5. BOTÓN SCROLL TO TOP (Contorno Giratorio)
+   ========================================= */
+.scroll-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--whatsapp), var(--whatsapp-dark));
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border: none;
+  z-index: 2000;
+  transition: var(--transition-bounce);
+  
+  /* Eliminamos la animación pulse anterior */
+  animation: scroll-btn-entrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Animación de entrada del botón */
+@keyframes scroll-btn-entrance {
+  from {
+    opacity: 0;
+    transform: scale(0) translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* === CONTORNO GIRATORIO PERMANENTE === */
+/* Anillo exterior girando con degradado cónico */
+.scroll-to-top::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    #25d366,
+    #00ff88,
+    #00d4ff,
+    #007bff,
+    #7a00ff,
+    #ff00c8,
+    #ff4444,
+    #ffaa00,
+    #25d366
+  );
+  z-index: -1;
+  animation: spin-border 2.5s linear infinite;
+  /* Máscara para crear efecto de anillo */
+}
+
+/* Segundo anillo para crear el hueco interior */
+.scroll-to-top::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 10%,
+    transparent 20%,
+    transparent 100%
+  );
+  z-index: -1;
+  animation: spin-border 1.5s linear infinite;
+  filter: blur(2px);
+}
+
+@keyframes spin-border {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* Fallback de rotación para todos los navegadores */
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .scroll-to-top::before {
+    background: linear-gradient(45deg, #25d366, #007bff, #7a00ff, #ff00c8);
+    background-size: 300%;
+    animation: spin-fallback 2s linear infinite;
+  }
+
+  @keyframes spin-fallback {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}
+
+/* Rotación real del pseudo-elemento (funciona en todos los navegadores) */
+.scroll-to-top::before {
+  animation: real-spin 3s linear infinite;
+}
+
+.scroll-to-top::after {
+  animation: real-spin 2s linear infinite reverse;
+}
+
+@keyframes real-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Sombra pulsante constante */
+.scroll-to-top {
+  box-shadow:
+    0 0 15px rgba(37, 211, 102, 0.4),
+    0 0 30px rgba(37, 211, 102, 0.2);
+}
+
+/* === HOVER: Aceleración + Glow intenso === */
+.scroll-to-top:hover {
+  background: linear-gradient(135deg, #1ebe57, #128c7e);
+  transform: translateY(-5px) scale(1.1);
+  box-shadow:
+    0 10px 30px rgba(37, 211, 102, 0.5),
+    0 0 50px rgba(37, 211, 102, 0.3),
+    0 0 80px rgba(37, 211, 102, 0.15);
+}
+
+.scroll-to-top:hover::before {
+  animation: real-spin 1s linear infinite;
+  filter: blur(1px) brightness(1.5);
+  inset: -6px;
+}
+
+.scroll-to-top:hover::after {
+  animation: real-spin 0.7s linear infinite reverse;
+  filter: blur(3px) brightness(1.5);
+  inset: -8px;
+}
+
+/* === EFECTO AL PRESIONAR (Click) === */
+.scroll-to-top:active {
+  transform: translateY(-2px) scale(0.92);
+  transition: transform 0.1s ease;
+  box-shadow:
+    0 2px 10px rgba(37, 211, 102, 0.6),
+    0 0 60px rgba(37, 211, 102, 0.4);
+}
+
+/* Efecto de "explosión" al presionar */
+.scroll-to-top:active::before {
+  animation: press-explode 0.4s ease-out forwards, real-spin 0.5s linear infinite;
+}
+
+@keyframes press-explode {
+  0% {
+    inset: -4px;
+    opacity: 1;
+    filter: blur(1px);
+  }
+  50% {
+    inset: -20px;
+    opacity: 0.8;
+    filter: blur(6px);
+  }
+  100% {
+    inset: -6px;
+    opacity: 1;
+    filter: blur(1px);
+  }
+}
+
+.scroll-to-top:active::after {
+  animation: press-ring 0.5s ease-out, real-spin 0.4s linear infinite reverse;
+}
+
+@keyframes press-ring {
+  0% {
+    inset: -4px;
+    opacity: 1;
+  }
+  60% {
+    inset: -30px;
+    opacity: 0;
+  }
+  100% {
+    inset: -4px;
+    opacity: 1;
+  }
+}
+
+/* Icono interior del botón con efecto de rebote al click */
+.scroll-to-top i,
+.scroll-to-top svg,
+.scroll-to-top span {
+  transition: var(--transition-bounce);
+  z-index: 5;
+}
+
+.scroll-to-top:active i,
+.scroll-to-top:active svg,
+.scroll-to-top:active span {
+  animation: icon-bounce 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes icon-bounce {
+  0% { transform: translateY(0); }
+  30% { transform: translateY(5px); }
+  60% { transform: translateY(-8px); }
+  80% { transform: translateY(2px); }
+  100% { transform: translateY(0); }
+}
+
+/* =========================================
+   6. FOOTER (Mejorado)
+   ========================================= */
+footer {
+  background: linear-gradient(180deg, #0a0a0a, #050505);
+  color: #888;
+  text-align: center;
+  padding: 2.5rem 1rem;
+  border-top: 1px solid #222;
+  margin-top: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Línea brillante superior del footer */
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary),
+    var(--whatsapp),
+    var(--primary),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer-line 4s ease-in-out infinite;
+}
+
+footer p {
+  transition: var(--transition);
+}
+
+footer p:hover {
+  color: #bbb;
+}
+
+.contact-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, var(--whatsapp), #128c7e);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: var(--transition-bounce);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.contact-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.contact-button:hover {
+  background: linear-gradient(135deg, #128c7e, #0f7b6f);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow:
+    0 8px 25px rgba(37, 211, 102, 0.5),
+    0 0 40px rgba(37, 211, 102, 0.2);
+}
+
+.contact-button:hover::before {
+  left: 100%;
+}
+
+.contact-button:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 2px 10px rgba(37, 211, 102, 0.4);
+}
+
+/* =========================================
+   7. ANIMACIONES UTILITARIAS GLOBALES
+   ========================================= */
+
+/* Fade in para elementos que aparecen */
+.fade-in {
+  animation: fadeIn 0.6s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide in desde la izquierda */
+.slide-in-left {
+  animation: slideInLeft 0.5s ease both;
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Slide in desde la derecha */
+.slide-in-right {
+  animation: slideInRight 0.5s ease both;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Efecto de selección de texto personalizado */
+::selection {
+  background: rgba(0, 123, 255, 0.3);
+  color: #fff;
+}
+
+::-moz-selection {
+  background: rgba(0, 123, 255, 0.3);
+  color: #fff;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--primary-dark), #003d82);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) #0a0a0a;
+}
+
+/* Focus visible para accesibilidad */
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* =========================================
+   8. MEDIA QUERIES (Responsive Total)
+   ========================================= */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 60px;
+  }
+
+  .catalog {
+    gap: 1.5rem;
+    padding: 0;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  .search-filter-container {
+    flex-direction: column;
+    align-items: stretch;
+    top: var(--header-height);
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .search-bar {
+    width: 100%;
+  }
+
+  .platform-filter {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .header nav ul {
+    gap: 0.75rem;
+  }
+
+  .header nav a {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.7rem;
+  }
+
+  .scroll-to-top {
+    width: 50px;
+    height: 50px;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    font-size: 1.2rem;
+  }
+
+  .card img {
+    height: 180px;
+  }
+
+  .game-title {
+    font-size: 1.2rem;
+  }
+
+  /* Reducir animaciones en móvil para rendimiento */
+  .card::before {
+    filter: blur(8px);
+  }
+
+  .scroll-to-top::after {
+    display: none; /* Menos capas en móvil */
+  }
+}
+
+@media (max-width: 480px) {
+  .catalog {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .card-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-gameplay, .btn-action {
+    padding: 0.8rem;
+  }
+
+  .header nav ul {
+    gap: 0.5rem;
+  }
+
+  .header nav a {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+  }
+}
+
+/* Reducir animaciones si el usuario lo prefiere */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* =========================================
+   9. ESTADOS DE LOADING / SKELETON
+   ========================================= */
+.skeleton {
+  background: linear-gradient(90deg,
+    #1f2937 25%,
+    #2d3748 50%,
+    #1f2937 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
