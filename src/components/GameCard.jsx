@@ -47,11 +47,11 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
     // Estados de UI
     const [imageError, setImageError] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
-    
+
     // Estados de Modales (NUEVO)
     const [showImageModal, setShowImageModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    
+
     const whatsapp = useWhatsapp();
     const { isAdmin } = useAdmin();
     const navigate = useNavigate();
@@ -71,14 +71,13 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
 
     return (
         <>
-            <div className={`group bg-gray-800 rounded-xl shadow-lg overflow-hidden text-white transition-all duration-300 hover:shadow-2xl hover:border-green-500/30 border border-transparent ${
-                viewMode === 'card' ? 'flex flex-col' : 'flex flex-col md:flex-row'
-            }`}>
-                
+            <div className={`group bg-gray-800 rounded-xl shadow-lg overflow-hidden text-white transition-all duration-300 hover:shadow-2xl hover:border-green-500/30 border border-transparent ${viewMode === 'card' ? 'flex flex-col' : 'flex flex-col md:flex-row'
+                }`}>
+
                 {/* ========================================== */}
                 {/* 1. SECCIÓN DE IMAGEN (Click para ampliar)  */}
                 {/* ========================================== */}
-                <div 
+                <div
                     onClick={() => setShowImageModal(true)}
                     className={`${viewMode === 'card' ? 'w-full' : 'w-full md:w-1/3 min-w-[200px]'} aspect-video bg-gray-900 relative overflow-hidden cursor-pointer`}
                 >
@@ -90,7 +89,7 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
                         onLoad={() => setImageLoaded(true)}
                         loading="lazy"
                     />
-                    
+
                     {/* Icono de Lupa que aparece al hacer hover */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                         <div className="bg-black/60 rounded-full p-3 backdrop-blur-sm">
@@ -136,11 +135,10 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
                         <div className="flex gap-2 w-full">
                             <button
                                 onClick={handleVideoToggle}
-                                className={`flex-1 flex items-center justify-center py-2.5 rounded-lg text-sm font-bold transition-all duration-200 ${
-                                    activeGameplayId === game.video_id 
-                                    ? 'bg-blue-600 text-white shadow-inner' 
-                                    : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
-                                }`}
+                                className={`flex-1 flex items-center justify-center py-2.5 rounded-lg text-sm font-bold transition-all duration-200 ${activeGameplayId === game.video_id
+                                        ? 'bg-blue-600 text-white shadow-inner'
+                                        : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                                    }`}
                             >
                                 <GameIcon /> {activeGameplayId === game.video_id ? 'Cerrar' : 'Gameplay'}
                             </button>
@@ -199,11 +197,11 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
             {/* MODAL 1: AMPLIAR IMAGEN DE PORTADA         */}
             {/* ========================================== */}
             {showImageModal && (
-                <div 
+                <div
                     className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 md:p-10 animate-in fade-in duration-200"
                     onClick={() => setShowImageModal(false)}
                 >
-                    <button 
+                    <button
                         className="absolute top-4 right-4 md:top-8 md:right-8 text-gray-400 hover:text-white bg-gray-800/80 p-2 rounded-full transition-colors z-[101]"
                         onClick={() => setShowImageModal(false)}
                     >
@@ -222,28 +220,28 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
             {/* MODAL 2: ALERTA DE ELIMINACIÓN PRO         */}
             {/* ========================================== */}
             {showDeleteModal && (
-                <div 
+                <div
                     className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200"
                     onClick={() => setShowDeleteModal(false)}
                 >
-                    <div 
+                    <div
                         className="bg-gray-800 rounded-3xl border border-gray-700 shadow-2xl w-full max-w-sm p-8 text-center animate-in zoom-in-95 duration-300"
                         onClick={(e) => e.stopPropagation()} // Evita que se cierre si clickeas la tarjeta
                     >
                         <AlertIcon />
                         <h3 className="text-2xl font-bold text-white mb-2">¿Eliminar juego?</h3>
                         <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                            Estás a punto de eliminar <strong>"{game.name}"</strong> del catálogo de forma permanente. <br/>¿Deseas continuar?
+                            Estás a punto de eliminar <strong>"{game.name}"</strong> del catálogo de forma permanente. <br />¿Deseas continuar?
                         </p>
-                        
+
                         <div className="flex gap-3">
-                            <button 
+                            <button
                                 onClick={() => setShowDeleteModal(false)}
                                 className="flex-1 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-bold transition-colors"
                             >
                                 Cancelar
                             </button>
-                            <button 
+                            <button
                                 onClick={confirmDelete}
                                 className="flex-1 py-3 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-red-900/30 active:scale-95"
                             >

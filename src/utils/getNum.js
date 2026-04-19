@@ -1,5 +1,7 @@
-// utils/getNum.js
 import { supabase } from '../supabaseClient';
+
+// Número de prueba estático para la demo
+const DEMO_WSP_NUMBER = '15550109999'; 
 
 export const getWhatsappNumber = async () => {
   try {
@@ -8,14 +10,15 @@ export const getWhatsappNumber = async () => {
       .select('numero_wsp')
       .limit(1);
 
-    if (error || !data || data.length === 0) {
-      console.warn('No se encontró número de WhatsApp o hubo error:', error?.message);
-      return null;
+  
+    if (error || !data || data.length === 0 || !data[0].numero_wsp) {
+      console.warn('Usando número de demo por defecto. Razón:', error?.message || 'Tabla vacía');
+      return DEMO_WSP_NUMBER; 
     }
 
     return data[0].numero_wsp;
   } catch (err) {
     console.error('Error inesperado:', err.message);
-    return null;
+    return DEMO_WSP_NUMBER; 
   }
 };
