@@ -6,7 +6,7 @@ import AddGame from './pages/AddGame'; // Importante importar el nuevo
 import EditGame from './pages/EditGame';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
-import Error404 from './pages/error404';
+import Error404 from './pages/Error404';
 
 const App = ()=> {
   return (
