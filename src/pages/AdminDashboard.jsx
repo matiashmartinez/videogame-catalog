@@ -1,154 +1,116 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
+import { useNavigate } from 'react-router-dom';
+import { Gamepad2, Package, CheckCircle, Store, PlusCircle, LayoutGrid } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const AdminDashboard = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    language: '',
-    platform: '',
-    url_image: '',
-    video_id: '',
-    avaible: true,
-    price: '',
-  });
+    const navigate = useNavigate();
+    const [stats, setStats] = useState({
+        total: 0,
+        active: 0,
+        ps4: 0,
+        ps5: 0
+    });
+    const [loading, setLoading] = useState(true);
 
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+    useEffect(() => {
+        const fetchStats = async () => {
+            // Traemos solo las columnas necesarias para hacer los cálculos, es más rápido
+            const { data, error } = await supabase
+                .from('videogames')
+                .select('platform, avaible');
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
+            if (error) {
+                toast.error('Error al cargar las estadísticas');
+                console.error(error);
+            } else if (data) {
+                setStats({
+                    total: data.length,
+                    active: data.filter(g => g.avaible).length,
+                    ps4: data.filter(g => g.platform === 'PS4').length,
+                    ps5: data.filter(g => g.platform === 'PS5').length,
+                });
+            }
+            setLoading(false);
+        };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage('');
-    setError('');
+        fetchStats();
+    }, []);
 
-    // validación rápida
-    if (!formData.name || !formData.language || !formData.platform) {
-      setError('Por favor completá todos los campos obligatorios.');
-      return;
-    }
+    if (loading) return (
+        <div className="flex justify-center items-center h-screen bg-gray-900">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-500"></div>
+        </div>
+    );
 
-    const { error: insertError } = await supabase
-      .from('videogames')
-      .insert([{
-        name: formData.name,
-        language: formData.language,
-        platform: formData.platform,
-        url_image: formData.url_image,
-        video_id: formData.video_id,
-        avaible: formData.avaible,
-        price: formData.price === '' ? null : parseFloat(formData.price)
-      }]);
+    return (
+        <div className="min-h-screen bg-gray-900 text-white px-4 py-10">
+            <div className="max-w-5xl mx-auto space-y-8">
+                
+                {/* Cabecera */}
+                <div className="flex flex-col md:flex-row justify-between items-center bg-gray-800 p-6 rounded-2xl border border-gray-700 shadow-xl">
+                    <div className="flex items-center gap-4 mb-4 md:mb-0">
+                        <div className="p-3 bg-green-500/20 rounded-lg">
+                            <Store className="w-8 h-8 text-green-500" />
+                        </div>
+                        <div>
+                            <h1 className="text-3xl font-bold text-gray-100">Panel de Administración</h1>
+                            <p className="text-gray-400">Resumen de tu inventario actual</p>
+                        </div>
+                    </div>
+                    
+                    {/* Botonera Principal */}
+                    <div className="flex gap-3 w-full md:w-auto">
+                        <button 
+                            onClick={() => navigate('/')}
+                            className="flex-1 md:flex-none flex items-center justify-center px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg font-medium transition-colors"
+                        >
+                            <LayoutGrid className="w-4 h-4 mr-2" /> Catálogo
+                        </button>
+                        <button 
+                            onClick={() => navigate('/admin/add')}
+                            className="flex-1 md:flex-none flex items-center justify-center px-4 py-2 bg-green-600 hover:bg-green-500 shadow-lg shadow-green-900/20 rounded-lg font-bold transition-all"
+                        >
+                            <PlusCircle className="w-4 h-4 mr-2" /> Nuevo Juego
+                        </button>
+                    </div>
+                </div>
 
-    if (insertError) {
-      console.error(insertError);
-      setError('Hubo un error al guardar el juego.');
-    } else {
-      setMessage('Juego guardado exitosamente.');
-      setFormData({
-        name: '',
-        language: '',
-        platform: '',
-        url_image: '',
-        video_id: '',
-        avaible: true,
-        price: '',
-      });
-    }
-  };
+                {/* Tarjetas de Estadísticas (Grid) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 flex flex-col justify-center items-center shadow-lg hover:border-green-500/50 transition-colors">
+                        <Package className="w-8 h-8 text-blue-400 mb-3" />
+                        <h3 className="text-3xl font-bold text-white">{stats.total}</h3>
+                        <p className="text-sm text-gray-400">Juegos Totales</p>
+                    </div>
 
-  return (
-    <div className="min-h-screen bg-gray-900 text-white px-4 py-8">
-      <div className="max-w-2xl mx-auto bg-gray-800 border border-gray-700 p-6 rounded-md shadow-lg">
-        <h2 className="text-2xl font-bold mb-4 text-green-400 text-center">Agregar nuevo videojuego</h2>
+                    <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 flex flex-col justify-center items-center shadow-lg hover:border-green-500/50 transition-colors">
+                        <CheckCircle className="w-8 h-8 text-green-400 mb-3" />
+                        <h3 className="text-3xl font-bold text-white">{stats.active}</h3>
+                        <p className="text-sm text-gray-400">Disponibles a la venta</p>
+                    </div>
 
-        {message && <p className="text-green-400 text-center mb-4">{message}</p>}
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+                    <div className="bg-gray-800 p-6 rounded-2xl border border-gray-700 flex flex-col justify-center items-center shadow-lg hover:border-green-500/50 transition-colors">
+                        <Gamepad2 className="w-8 h-8 text-indigo-400 mb-3" />
+                        <div className="flex gap-4">
+                            <div className="text-center">
+                                <h3 className="text-2xl font-bold text-white">{stats.ps4}</h3>
+                                <p className="text-xs text-gray-400">PS4</p>
+                            </div>
+                            <div className="w-px bg-gray-600"></div>
+                            <div className="text-center">
+                                <h3 className="text-2xl font-bold text-white">{stats.ps5}</h3>
+                                <p className="text-xs text-gray-400">PS5</p>
+                            </div>
+                        </div>
+                    </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Nombre del juego *"
-            className="w-full px-3 py-2 rounded bg-gray-700 border border-gray-600"
-            required
-          />
-
-          <input
-            name="language"
-            value={formData.language}
-            onChange={handleChange}
-            placeholder="Idioma *"
-            className="w-full px-3 py-2 rounded bg-gray-700 border border-gray-600"
-            required
-          />
-
-          <select
-            name="platform"
-            value={formData.platform}
-            onChange={handleChange}
-            className="w-full px-3 py-2 rounded bg-gray-700 border border-gray-600"
-            required
-          >
-            <option value="">Seleccionar plataforma *</option>
-            <option value="PS4">PS4</option>
-            <option value="PS5">PS5</option>
-          </select>
-
-          <input
-            name="url_image"
-            value={formData.url_image}
-            onChange={handleChange}
-            placeholder="URL de la imagen"
-            className="w-full px-3 py-2 rounded bg-gray-700 border border-gray-600"
-          />
-
-          <input
-            name="video_id"
-            value={formData.video_id}
-            onChange={handleChange}
-            placeholder="ID del video de YouTube"
-            className="w-full px-3 py-2 rounded bg-gray-700 border border-gray-600"
-          />
-
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            placeholder="Precio"
-            className="w-full px-3 py-2 rounded bg-gray-700 border border-gray-600"
-            min="0"
-          />
-
-          <label className="flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              name="avaible"
-              checked={formData.avaible}
-              onChange={handleChange}
-              className="accent-green-500"
-            />
-            Disponible
-          </label>
-
-          <button
-            type="submit"
-            className="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded font-semibold"
-          >
-            Guardar juego
-          </button>
-        </form>
-      </div>
-    </div>
-  );
+                </div>
+            </div>
+        </div>
+    );
 };
 
 export default AdminDashboard;
