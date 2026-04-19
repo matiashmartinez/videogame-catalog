@@ -14,7 +14,7 @@ const Error404 = () => {
             </div>
 
             <h1 className="text-4xl md:text-5xl font-black mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
-                NIVEL NO ENCONTRADO
+                NIVEL DE JUEGO NO ENCONTRADO
             </h1>
 
             <p className="text-gray-400 max-w-md mx-auto mb-8 text-lg">
