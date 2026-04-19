@@ -94,7 +94,7 @@ const AddGame = () => {
     return (
         <div className="max-w-2xl mx-auto py-10 px-6 text-gray-100">
             <button 
-                onClick={() => navigate('/admin')}
+                onClick={() => navigate('/')}
                 className="flex items-center text-gray-400 hover:text-white mb-6 transition-colors"
             >
                 <ArrowLeft className="w-4 h-4 mr-2" /> Volver al Panel
