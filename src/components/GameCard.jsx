@@ -51,6 +51,7 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
     // Estados de Modales (NUEVO)
     const [showImageModal, setShowImageModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showWhatsappModal, setShowWhatsappModal] = useState(false);
 
     const whatsapp = useWhatsapp();
     const { isAdmin } = useAdmin();
@@ -136,22 +137,20 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
                             <button
                                 onClick={handleVideoToggle}
                                 className={`flex-1 flex items-center justify-center py-2.5 rounded-lg text-sm font-bold transition-all duration-200 ${activeGameplayId === game.video_id
-                                        ? 'bg-blue-600 text-white shadow-inner'
-                                        : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+                                    ? 'bg-blue-600 text-white shadow-inner'
+                                    : 'bg-gray-700 text-gray-200 hover:bg-gray-600'
                                     }`}
                             >
                                 <GameIcon /> {activeGameplayId === game.video_id ? 'Cerrar' : 'Gameplay'}
                             </button>
 
                             {whatsapp && game.avaible ? (
-                                <a
-                                    href={`https://wa.me/${whatsapp}?text=${message}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                <button
+                                    onClick={() => setShowWhatsappModal(true)}
                                     className="flex-1 flex items-center justify-center py-2.5 bg-green-600 hover:bg-green-500 text-white rounded-lg text-sm font-bold transition-all duration-200 shadow-md"
                                 >
                                     <WhatsAppIcon /> Consultar
-                                </a>
+                                </button>
                             ) : (
                                 <button disabled className="flex-1 flex items-center justify-center py-2.5 bg-gray-700/50 text-gray-500 rounded-lg text-sm font-bold cursor-not-allowed">
                                     <WhatsAppIcon /> Consultar
@@ -246,6 +245,52 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
                                 className="flex-1 py-3 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-red-900/30 active:scale-95"
                             >
                                 Sí, eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
+            {/* ========================================== */}
+            {/* MODAL 3: CONFIRMACIÓN DE WHATSAPP (DEMO)   */}
+            {/* ========================================== */}
+            {showWhatsappModal && (
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+                    onClick={() => setShowWhatsappModal(false)}
+                >
+                    <div
+                        className="bg-gray-800 rounded-3xl border border-gray-700 shadow-2xl w-full max-w-sm p-8 text-center animate-in zoom-in-95 duration-300"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* Icono grande de WhatsApp */}
+                        <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-500/20">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+
+                        <h3 className="text-2xl font-bold text-white mb-2">Modo Demo</h3>
+                        <p className="text-gray-400 text-sm mb-8 leading-relaxed">
+                            Estás a punto de abrir WhatsApp con un número de prueba para consultar por <strong>"{game.name}"</strong>.
+                        </p>
+
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => setShowWhatsappModal(false)}
+                                className="flex-1 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl font-bold transition-colors"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setShowWhatsappModal(false);
+                                    window.open(`https://wa.me/${whatsapp}?text=${message}`, '_blank');
+                                }}
+                                className="flex-1 py-3 bg-green-600 hover:bg-green-500 text-white rounded-xl font-bold transition-all shadow-lg shadow-green-900/30 active:scale-95"
+                            >
+                                Continuar
                             </button>
                         </div>
                     </div>
