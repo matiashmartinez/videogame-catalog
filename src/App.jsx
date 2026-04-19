@@ -6,53 +6,31 @@ import AddGame from './pages/AddGame'; // Importante importar el nuevo
 import EditGame from './pages/EditGame';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import Error404 from './pages/error404';
 
-function App() {
+const App = ()=> {
   return (
     <Routes>
-      {/* 1. Login: Fuera de todo para que sea una pantalla limpia */}
+      {/* 1. Rutas totalmente abiertas */}
       <Route path="/admin" element={<AdminLogin />} />
 
-      {/* 2. Rutas con el diseño base (Navbar, Footer, etc.) */}
+      {/* 2. Rutas que llevan el diseño base (Navbar) */}
       <Route element={<Layout />}>
-        
-        {/* Ruta pública: El catálogo */}
         <Route path="/" element={<CatalogPage />} />
 
-        {/* 3. RUTAS PROTEGIDAS: Cada una con su URL única */}
-        
-        {/* Dashboard: Estadísticas y resumen */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+        {/* 3. CAPA DE SEGURIDAD: Todo lo que esté aquí adentro está protegido */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/add" element={<AddGame />} />
+          <Route path="/edit/:id" element={<EditGame />} />
+        </Route>
 
-        {/* Agregar: El formulario para nuevos juegos */}
-        <Route
-          path="/admin/add"
-          element={
-            <ProtectedRoute>
-              <AddGame />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Editar: El formulario con ID dinámico */}
-        <Route
-          path="/edit/:id"
-          element={
-            <ProtectedRoute>
-              <EditGame />
-            </ProtectedRoute>
-          }
-        />
+        {/* Ruta de escape */}
+        <Route path="*" element={<Error404 />} />
       </Route>
     </Routes>
   );
 }
+
 
 export default App;

@@ -23,6 +23,13 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
+
+    if (error) {
+        console.error("Error cerrando sesión:", error);
+        toast.error('Hubo un problema al cerrar sesión');
+        return; 
+    }
+
     setIsAdmin(false);
     toast.success('Sesión cerrada');
     navigate('/');
@@ -70,6 +77,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;

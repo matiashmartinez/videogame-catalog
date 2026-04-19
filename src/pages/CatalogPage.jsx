@@ -9,9 +9,8 @@ import { SearchX } from 'lucide-react';
 // 👻 SKELETON (CARGA FALSA)
 // ==========================================
 const GameCardSkeleton = ({ viewMode }) => (
-    <div className={`bg-gray-800 rounded-2xl overflow-hidden animate-pulse border border-gray-700 ${
-        viewMode === 'card' ? 'flex flex-col' : 'flex flex-col md:flex-row'
-    }`}>
+    <div className={`bg-gray-800 rounded-2xl overflow-hidden animate-pulse border border-gray-700 ${viewMode === 'card' ? 'flex flex-col' : 'flex flex-col md:flex-row'
+        }`}>
         <div className={`${viewMode === 'card' ? 'w-full aspect-video' : 'w-full md:w-72 aspect-video md:aspect-square'} bg-gray-700`}></div>
         <div className="p-5 flex-1 space-y-4">
             <div className="h-6 bg-gray-700 rounded w-3/4"></div>
@@ -27,9 +26,7 @@ const GameCardSkeleton = ({ viewMode }) => (
     </div>
 );
 
-// ==========================================
-// 🎮 COMPONENTE PRINCIPAL: CATALOG PAGE
-// ==========================================
+
 const CatalogPage = () => {
     // --- ESTADOS ---
     const [games, setGames] = useState([]);
@@ -52,7 +49,7 @@ const CatalogPage = () => {
 
                 if (error) throw error;
                 // Si data es null, aseguramos que sea un arreglo vacío para que no rompa el map()
-                setGames(data || []); 
+                setGames(data || []);
             } catch (error) {
                 console.error('Error cargando juegos:', error);
                 toast.error('Error al conectar con la base de datos');
@@ -69,50 +66,40 @@ const CatalogPage = () => {
         setGames(prevGames => prevGames.filter(game => game.id_videogame !== id));
     };
 
-    // --- LÓGICA DE FILTRADO Y ORDENAMIENTO ---
+
     const filteredGames = useMemo(() => {
-        let result = [...games];
+        const filtered = games.filter(game => {
+            // Coincidencia por nombre
+            if (searchTerm && !game.name?.toLowerCase().includes(searchTerm.toLowerCase()))
+                return false;
+            // Coincidencia por plataforma
+            if (filterPlatform && game.platform !== filterPlatform)
+                return false;
+            // Coincidencia por disponibilidad
+            if (filterAvailability && game.avaible !== (filterAvailability === 'true'))
+                return false;
+            return true;
+        });
 
-        // 1. Filtro por Búsqueda (Texto)
-        if (searchTerm) {
-            result = result.filter((game) =>
-                game.name?.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        }
-
-        // 2. Filtro por Plataforma
-        if (filterPlatform) {
-            result = result.filter((game) => game.platform === filterPlatform);
-        }
-
-        // 3. Filtro por Disponibilidad
-        if (filterAvailability) {
-            const isAvailable = filterAvailability === 'true';
-            result = result.filter((game) => game.avaible === isAvailable);
-        }
-
-        // 4. Ordenamiento
+        // Ordenación (igual que antes)
         const sortMethods = {
             az: (a, b) => (a.name || '').localeCompare(b.name || ''),
             za: (a, b) => (b.name || '').localeCompare(a.name || ''),
             recent: (a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0),
             oldest: (a, b) => new Date(a.created_at || 0) - new Date(b.created_at || 0),
         };
-
-        return result.sort(sortMethods[sortOption] || sortMethods.az);
+        return filtered.sort(sortMethods[sortOption] || sortMethods.az);
     }, [games, searchTerm, filterPlatform, filterAvailability, sortOption]);
 
-    // --- EXTRAER PLATAFORMAS ÚNICAS ---
-    // Filtramos valores nulos o indefinidos por las dudas
-    const uniquePlatforms = [...new Set(games.map((g) => g.platform))].filter(Boolean);
 
-    // ==========================================
-    // 🎨 RENDERIZADO VISUAL
-    // ==========================================
+    const uniquePlatforms = [...new Set(games.map((g) =>
+        g.platform))].filter(Boolean);
+
+
     return (
         <div className="min-h-screen bg-gray-900 text-white px-4 py-8">
             <div className="max-w-6xl mx-auto space-y-8">
-                
+
                 {/* 1. HEADER (TÍTULO) */}
                 <div className="text-center space-y-2">
                     <h1 className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
@@ -141,19 +128,18 @@ const CatalogPage = () => {
                 </div>
 
                 {/* 3. ZONA DE RESULTADOS (GRILLA) */}
-                <div className={`grid gap-6 transition-all duration-500 ${
-                    viewMode === 'card' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'
-                }`}>
-                    
+                <div className={`grid gap-6 transition-all duration-500 ${viewMode === 'card' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'
+                    }`}>
+
                     {isLoading ? (
-                        
+
                         /* A) MIENTRAS CARGA: Mostramos 6 tarjetas fantasma */
                         [...Array(6)].map((_, i) => (
                             <GameCardSkeleton key={i} viewMode={viewMode} />
                         ))
 
                     ) : filteredGames.length > 0 ? (
-                        
+
                         /* B) CARGA EXITOSA: Mostramos los juegos reales */
                         filteredGames.map((game) => (
                             <GameCard
@@ -167,7 +153,7 @@ const CatalogPage = () => {
                         ))
 
                     ) : (
-                        
+
                         /* C) SIN RESULTADOS: Pantalla de aviso amigable */
                         <div className="col-span-full py-20 flex flex-col items-center justify-center space-y-4 bg-gray-800/30 rounded-3xl border border-dashed border-gray-700">
                             <div className="p-4 bg-gray-800 rounded-full text-gray-500">
@@ -177,7 +163,7 @@ const CatalogPage = () => {
                                 <h3 className="text-xl font-bold text-gray-300">No encontramos resultados</h3>
                                 <p className="text-gray-500">Intenta ajustar los filtros o la búsqueda</p>
                             </div>
-                            <button 
+                            <button
                                 onClick={() => {
                                     setSearchTerm('');
                                     setFilterPlatform('');
