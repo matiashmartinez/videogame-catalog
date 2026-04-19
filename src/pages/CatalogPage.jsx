@@ -5,9 +5,7 @@ import GameCard from '../components/GameCard';
 import toast from 'react-hot-toast';
 import { SearchX } from 'lucide-react';
 
-// ==========================================
-// 👻 SKELETON (CARGA FALSA)
-// ==========================================
+
 const GameCardSkeleton = ({ viewMode }) => (
     <div className={`bg-gray-800 rounded-2xl overflow-hidden animate-pulse border border-gray-700 ${viewMode === 'card' ? 'flex flex-col' : 'flex flex-col md:flex-row'
         }`}>
@@ -28,7 +26,7 @@ const GameCardSkeleton = ({ viewMode }) => (
 
 
 const CatalogPage = () => {
-    // --- ESTADOS ---
+   
     const [games, setGames] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterPlatform, setFilterPlatform] = useState('');
@@ -38,7 +36,7 @@ const CatalogPage = () => {
     const [sortOption, setSortOption] = useState('az');
     const [isLoading, setIsLoading] = useState(true);
 
-    // --- CARGA DE DATOS DESDE SUPABASE ---
+   
     useEffect(() => {
         const fetchGames = async () => {
             setIsLoading(true);
@@ -48,7 +46,7 @@ const CatalogPage = () => {
                     .select('*');
 
                 if (error) throw error;
-                // Si data es null, aseguramos que sea un arreglo vacío para que no rompa el map()
+               
                 setGames(data || []);
             } catch (error) {
                 console.error('Error cargando juegos:', error);
@@ -60,28 +58,28 @@ const CatalogPage = () => {
         fetchGames();
     }, []);
 
-    // --- SIMULACIÓN DE ELIMINADO PARA MODO DEMO ---
+    
     const handleDeleteSimulated = (id) => {
-        // Quitamos el juego del estado local instantáneamente
+       
         setGames(prevGames => prevGames.filter(game => game.id_videogame !== id));
     };
 
 
     const filteredGames = useMemo(() => {
         const filtered = games.filter(game => {
-            // Coincidencia por nombre
+           
             if (searchTerm && !game.name?.toLowerCase().includes(searchTerm.toLowerCase()))
                 return false;
-            // Coincidencia por plataforma
+          
             if (filterPlatform && game.platform !== filterPlatform)
                 return false;
-            // Coincidencia por disponibilidad
+            
             if (filterAvailability && game.avaible !== (filterAvailability === 'true'))
                 return false;
             return true;
         });
 
-        // Ordenación (igual que antes)
+       
         const sortMethods = {
             az: (a, b) => (a.name || '').localeCompare(b.name || ''),
             za: (a, b) => (b.name || '').localeCompare(a.name || ''),
@@ -100,7 +98,7 @@ const CatalogPage = () => {
         <div className="min-h-screen bg-gray-900 text-white px-4 py-8">
             <div className="max-w-6xl mx-auto space-y-8">
 
-                {/* 1. HEADER (TÍTULO) */}
+                
                 <div className="text-center space-y-2">
                     <h1 className="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">
                         CATÁLOGO GAMER
@@ -110,7 +108,7 @@ const CatalogPage = () => {
                     </p>
                 </div>
 
-                {/* 2. BARRA DE HERRAMIENTAS (FILTROS) */}
+                
                 <div className="sticky top-4 z-30 transition-all">
                     <CatalogToolbar
                         searchTerm={searchTerm}
@@ -127,7 +125,7 @@ const CatalogPage = () => {
                     />
                 </div>
 
-                {/* 3. ZONA DE RESULTADOS (GRILLA) */}
+              
                 <div className={`grid gap-6 transition-all duration-500 ${viewMode === 'card' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'
                     }`}>
 
@@ -154,7 +152,7 @@ const CatalogPage = () => {
 
                     ) : (
 
-                        /* C) SIN RESULTADOS: Pantalla de aviso amigable */
+                     
                         <div className="col-span-full py-20 flex flex-col items-center justify-center space-y-4 bg-gray-800/30 rounded-3xl border border-dashed border-gray-700">
                             <div className="p-4 bg-gray-800 rounded-full text-gray-500">
                                 <SearchX className="w-12 h-12" />

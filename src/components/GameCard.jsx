@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import { useState } from 'react';
 import { useWhatsapp } from '../context/WhatsappContext';
 import { useNavigate } from 'react-router-dom';
 import { useAdmin } from '../context/AdminContext';
@@ -80,29 +82,38 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
                 {/* ========================================== */}
                 <div
                     onClick={() => setShowImageModal(true)}
-                    className={`${viewMode === 'card' ? 'w-full' : 'w-full md:w-1/3 min-w-[200px]'} aspect-video bg-gray-900 relative overflow-hidden cursor-pointer`}
+                    className={`${viewMode === 'card' ? 'w-full' : 'w-full md:w-1/3 min-w-[200px]'} aspect-video bg-gray-900 relative overflow-hidden cursor-pointer group`}
                 >
                     <img
                         src={imageError ? '/placeholder-game.jpg' : game.url_image || '/placeholder-game.jpg'}
                         alt={game.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 group-hover:opacity-80"
+                        className={`w-full h-full object-cover transition-all duration-500 
+            ${!game.avaible
+                                ? 'grayscale opacity-40 contrast-125'
+                                : 'group-hover:scale-110 group-hover:opacity-80'
+                            }`}
                         onError={() => setImageError(true)}
                         onLoad={() => setImageLoaded(true)}
                         loading="lazy"
                     />
 
-                    {/* Icono de Lupa que aparece al hacer hover */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                        <div className="bg-black/60 rounded-full p-3 backdrop-blur-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                            </svg>
+                    {/* Icono de Lupa (solo si está disponible) */}
+                    {game.avaible && (
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div className="bg-black/60 rounded-full p-3 backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                </svg>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
+                    {/* CARTEL DE AGOTADO CENTRAL Y GRANDE */}
                     {!game.avaible && (
-                        <div className="absolute top-2 right-2 bg-red-600/90 backdrop-blur-sm text-white px-2 py-1 rounded text-[10px] uppercase font-black shadow-lg tracking-wider z-10">
-                            Agotado
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                            <div className="bg-red-600 text-white px-4 py-1.5 rounded-md text-sm font-black tracking-tighter shadow-2xl border-2 border-red-500 rotate-[-12deg] animate-pulse">
+                                SIN STOCK
+                            </div>
                         </div>
                     )}
                 </div>
@@ -127,7 +138,7 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
 
                     <div className="mt-auto mb-4">
                         <span className="text-2xl font-black text-green-400 drop-shadow-sm">
-                            {game.price ? `$${game.price}` : 'Consultar'}
+                            {game.price ? `$${game.price}` : '$'}
                         </span>
                     </div>
 
@@ -230,7 +241,7 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
                         <AlertIcon />
                         <h3 className="text-2xl font-bold text-white mb-2">¿Eliminar juego?</h3>
                         <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                            Estás a punto de eliminar <strong>"{game.name}"</strong> del catálogo de forma permanente. <br />¿Deseas continuar?
+                            Estás a punto de eliminar <strong>{game.name}</strong> del catálogo de forma permanente. <br />¿Deseas continuar?
                         </p>
 
                         <div className="flex gap-3">
@@ -273,7 +284,7 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
 
                         <h3 className="text-2xl font-bold text-white mb-2">Modo Demo</h3>
                         <p className="text-gray-400 text-sm mb-8 leading-relaxed">
-                            Estás a punto de abrir WhatsApp con un número de prueba para consultar por <strong>"{game.name}"</strong>.
+                            Estás a punto de abrir WhatsApp con un número de prueba para consultar por <strong>&quot;{game.name}&quot;</strong>.
                         </p>
 
                         <div className="flex gap-3">
