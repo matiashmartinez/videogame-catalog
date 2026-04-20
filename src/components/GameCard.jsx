@@ -50,7 +50,7 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
     const [imageError, setImageError] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
 
-    // Estados de Modales (NUEVO)
+    // Estados de Modales 
     const [showImageModal, setShowImageModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showWhatsappModal, setShowWhatsappModal] = useState(false);
@@ -94,7 +94,7 @@ const GameCard = ({ game, viewMode, activeGameplayId, setActiveGameplayId, onDel
                             }`}
                         onError={() => setImageError(true)}
                         onLoad={() => setImageLoaded(true)}
-                        loading="lazy"
+                        fetchpriority="high"
                     />
 
                     {/* Icono de Lupa (solo si está disponible) */}
