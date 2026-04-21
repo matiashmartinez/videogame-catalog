@@ -2,17 +2,15 @@ import { Routes, Route } from 'react-router-dom';
 import CatalogPage from './pages/CatalogPage';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
-import AddGame from './pages/AddGame'; // Importante importar el nuevo
+import AddGame from './pages/AddGame'; 
 import EditGame from './pages/EditGame';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
 import Error404 from './pages/Error404';
-import { useAdmin } from './context/AdminContext'
 import {useInactivityTimeout} from './hooks/useInactivityTimeout';
 
 const App = ()=> {
 
-const { isAdmin } = useAdmin();
 
 useInactivityTimeout(2);
   return (

@@ -61,11 +61,11 @@ const AdminLogin = () => {
         <div className="max-w-fit mx-auto my-6 p-4 bg-gray-900 border-l-4 border-green-500 rounded-r-lg shadow-lg font-mono text-sm text-gray-300">
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 justify-center items-center">
             <span>
-              Usuario: <span className="text-green-400 font-bold select-all">admin@catalogvideogame.com</span>
+              Usuario: <span className="text-green-400 font-bold select-all">admin@catalogdemo.com</span>
             </span>
             <span className="hidden sm:inline text-gray-600">|</span>
             <span>
-              Pass: <span className="text-green-400 font-bold select-all">admin</span>
+              Pass: <span className="text-green-400 font-bold select-all">AdminDemo</span>
             </span>
           </div>
         </div>
