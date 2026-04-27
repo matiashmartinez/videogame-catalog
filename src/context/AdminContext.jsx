@@ -7,7 +7,7 @@ const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
-  // 1. Agregamos el estado de carga inicializado en true
+
   const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export const AdminProvider = ({ children }) => {
       if (!error) {
         setIsAdmin(!!session);
       }
-      // 2. Ya obtuvimos respuesta, dejamos de cargar
+      
       setIsLoading(false); 
     };
 
@@ -25,14 +25,14 @@ export const AdminProvider = ({ children }) => {
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setIsAdmin(!!session);
-      setIsLoading(false); // Por si el cambio de estado ocurre de repente
+      setIsLoading(false); 
     });
 
     return () => listener.subscription.unsubscribe();
   }, []);
 
   return (
-    // 3. Exportamos isLoading para que las rutas puedan leerlo
+    //  Exportamos isLoading para rutas
     <AdminContext.Provider value={{ isAdmin, setIsAdmin, isLoading }}> 
       {children}
     </AdminContext.Provider>

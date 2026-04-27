@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 export const GameCardImage = ({ game, viewMode, state, setters }) => {
     return (
-        <div 
-            onClick={() => setters.setShowImageModal(true)} 
+        <div
+            onClick={() => setters.setShowImageModal(true)}
             className={`${STYLES.imageSection} ${viewMode === 'card' ? 'w-full' : 'w-full md:w-1/3 min-w-[200px]'}`}
         >
             <img

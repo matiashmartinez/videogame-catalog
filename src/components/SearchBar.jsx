@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 const SearchBar = ({ searchTerm, setSearchTerm }) => {
     return (
         <div className="mb-4 text-center">

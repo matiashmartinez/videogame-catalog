@@ -1,38 +1,29 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
-import { useEffect } from 'react';
 import { useAdmin } from '../context/AdminContext';
 import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+ 
   const { isAdmin, setIsAdmin } = useAdmin();
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsAdmin(!!session);
-    });
-
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAdmin(!!session);
-    });
-
-    return () => listener?.subscription.unsubscribe();
-  }, [setIsAdmin]);
-
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-        console.error("Error cerrando sesión:", error);
-        toast.error('Hubo un problema al cerrar sesión');
-        return; 
+    try {
+      // 1. Intentamos cerrar sesión en servidor
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      
+      toast.success('Sesión cerrada');
+    } catch (error) {
+      console.warn("Error al cerrar sesión (servidor):", error.message);
+    } finally {
+     
+      localStorage.removeItem('lastActivity');
+      setIsAdmin(false);
+      navigate('/');
     }
-
-    setIsAdmin(false);
-    toast.success('Sesión cerrada');
-    navigate('/');
   };
 
   return (
@@ -45,7 +36,7 @@ const Navbar = () => {
         <div className="flex items-center gap-4 text-white text-sm">
           <Link
             to="/"
-            className={`${location.pathname === '/' ? 'font-bold text-green-400' : 'hover:text-green-300'}`}
+            className={`${location.pathname === '/' ? 'font-bold text-green-400' : 'hover:text-green-300 transition-colors'}`}
           >
             Catálogo
           </Link>
@@ -54,23 +45,23 @@ const Navbar = () => {
             <>
               <Link
                 to="/dashboard"
-                className={`${location.pathname === '/dashboard' ? 'font-bold text-green-400' : 'hover:text-green-300'}`}
+                className={`${location.pathname === '/dashboard' ? 'font-bold text-green-400' : 'hover:text-green-300 transition-colors'}`}
               >
-                Admin
+                Panel Admin
               </Link>
               <button
                 onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-medium"
+                className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded font-medium transition-colors"
               >
-                Cerrar sesión
+                Salir
               </button>
             </>
           ) : (
             <Link
               to="/admin"
-              className={`${location.pathname === '/admin' ? 'font-bold text-green-400' : 'hover:text-green-300'}`}
+              className={`${location.pathname === '/admin' ? 'font-bold text-green-400' : 'hover:text-green-300 transition-colors'}`}
             >
-              Admin
+              Acceso Admin
             </Link>
           )}
         </div>

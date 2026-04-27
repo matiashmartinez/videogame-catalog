@@ -86,7 +86,7 @@ export const GameCardModals = ({ game, state, setters, actions }) => {
     );
 };
 
-// Validaciones de nivel Senior
+
 GameCardModals.propTypes = {
     game: PropTypes.object.isRequired,
     state: PropTypes.shape({

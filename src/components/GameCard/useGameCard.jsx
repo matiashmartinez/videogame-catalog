@@ -42,7 +42,7 @@ export const useGameCard = (game, activeGameplayId, setActiveGameplayId, onDelet
         window.open(`https://wa.me/${whatsapp}?text=${message}`, '_blank');
     };
 
-    // 5. Retornamos todo ordenado
+    
     return {
         state: { imageError, imageLoaded, showImageModal, showDeleteModal, showWhatsappModal, isVideoActive },
         setters: { setImageError, setImageLoaded, setShowImageModal, setShowDeleteModal, setShowWhatsappModal },
