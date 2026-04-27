@@ -8,4 +8,15 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  build: {
+    minify: 'terser', // Activamos Terser como el minificador oficial
+    terserOptions: {
+      compress: {
+        // Esto elimina TODOS los console.log de tu código al compilar
+        drop_console: true, 
+        // Esto elimina los console.warn (como el que pusimos en el catch)
+        drop_debugger: true,
+      },
+    },
+  },
 });

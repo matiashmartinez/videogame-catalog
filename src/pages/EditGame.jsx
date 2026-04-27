@@ -7,7 +7,7 @@ import {
     Gamepad2,
     Languages,
     Image as ImageIcon,
-    Video, 
+    Video,
     DollarSign,
     CheckCircle,
     Eraser,
@@ -70,7 +70,7 @@ const EditGame = () => {
         const newErrors = {};
         if (!game.name) newErrors.name = "El nombre es obligatorio";
         if (!game.platform) newErrors.platform = "Selecciona una plataforma";
-        
+
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;

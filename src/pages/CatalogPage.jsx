@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../supabaseClient';
 import CatalogToolbar from '../components/CatalogToolbar';

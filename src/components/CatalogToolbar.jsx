@@ -1,4 +1,4 @@
-import { FaThLarge, FaList, FaSortAlphaDown, FaSortAlphaUpAlt, FaClock } from 'react-icons/fa';
+import { FaThLarge, FaList} from 'react-icons/fa';
 
 const CatalogToolbar = ({
   searchTerm,
