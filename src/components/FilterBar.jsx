@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 const FilterBar = ({ filterPlatform, setFilterPlatform, filterAvailability, setFilterAvailability }) => {
     return (
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
